@@ -1,0 +1,17 @@
+name: MeggaChat
+main: com.meggawatts.MeggaChat.MeggaChat
+version: 0.1
+description: Comprehensive Lightweight Admin Chat Channel!
+authors:
+  - meggawatts
+permissions:
+  meggachat.admin:
+    description: Full access to Admin Chat.
+    default: op
+commands:
+  a:
+    usage: |
+            /a on 
+            /a off
+            /a <message>
+            /a ?
