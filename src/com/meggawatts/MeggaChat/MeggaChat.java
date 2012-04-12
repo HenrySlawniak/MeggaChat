@@ -50,7 +50,9 @@ public class MeggaChat extends JavaPlugin implements Listener {
             }
 
         }
-        sender.sendMessage(ChatColor.DARK_RED + "No Permissions!");
+        else if (!(sender.hasPermission("meggachat,admin"))){
+            sender.sendMessage(ChatColor.DARK_RED + "No Permissions!");
+        }
         return true;
     }
 
