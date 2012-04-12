@@ -40,9 +40,9 @@ public class MeggaChat extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.DARK_RED + "Admin Chat disabled");
                 }
                 if (args[0].equalsIgnoreCase("?")) {
-                    sender.sendMessage(ChatColor.DARK_RED + "/a on will toggle AdminChat mode on.");
-                    sender.sendMessage(ChatColor.DARK_RED + "/a off will toggle AdminChat mode off.");
-                    sender.sendMessage(ChatColor.DARK_RED + "/a <message> will send the message to all who have access to adminchat.");
+                    sender.sendMessage(ChatColor.DARK_RED + "/a on " + ChatColor.GREEN + "will toggle AdminChat mode on.");
+                    sender.sendMessage(ChatColor.DARK_RED + "/a off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
+                    sender.sendMessage(ChatColor.DARK_RED + "/a <message> " + ChatColor.GREEN + "will send the message to all who have access to adminchat.");
                 }
                 if (args.length > 1) {
                     sendToAdmins(args[0], player);
