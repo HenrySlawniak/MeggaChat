@@ -57,7 +57,12 @@ public class MeggaChat extends JavaPlugin implements Listener {
     }
 
     public void sendToAdmins(String Message, Player chatter) {
-        Bukkit.broadcast(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.BOLD + "" + ChatColor.GREEN + Message, "meggachat.admin");
+        for (Player player: getServer().getOnlinePlayers()){
+            if(player.hasPermission("meggachat.admin")){
+                player.sendMessage(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message);
+            }
+        }
+        //Bukkit.broadcast(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message, "meggachat.admin");
     }
 
     @EventHandler(priority = EventPriority.HIGH)
