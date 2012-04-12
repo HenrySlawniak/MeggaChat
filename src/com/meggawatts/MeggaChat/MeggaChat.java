@@ -28,6 +28,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String Message = "";
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
             if (player.hasPermission("meggachat.admin")) {
@@ -44,25 +45,26 @@ public class MeggaChat extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.DARK_RED + "/a off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
                     sender.sendMessage(ChatColor.DARK_RED + "/a <message> " + ChatColor.GREEN + "will send the message to all who have access to adminchat.");
                 }
+                Message = args[0];
                 if (args.length > 1) {
-                    sendToAdmins(args[0], player);
+                    for (int i = 1; i < args.length; i++) {
+                        Message += " " + args[i];
+                    }
                 }
             }
 
-        }
-        else if (!(sender.hasPermission("meggachat.admin"))){
+        } else if (!(sender.hasPermission("meggachat.admin"))) {
             sender.sendMessage(ChatColor.DARK_RED + "No Permissions!");
         }
         return true;
     }
 
     public void sendToAdmins(String Message, Player chatter) {
-        for (Player player: getServer().getOnlinePlayers()){
-            if(player.hasPermission("meggachat.admin")){
-                player.sendMessage(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message);
+        for (Player player : getServer().getOnlinePlayers()) {
+            if (player.hasPermission("meggachat.admin")) {
+                player.sendMessage(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + ChatColor.BOLD + chatter.getName() + ": " + ChatColor.GREEN + Message);
             }
         }
-        //Bukkit.broadcast(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message, "meggachat.admin");
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -73,5 +75,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
             sendToAdmins(event.getMessage(), event.getPlayer());
             event.setCancelled(true);
         }
+
     }
 }
