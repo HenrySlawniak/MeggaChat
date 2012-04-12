@@ -65,7 +65,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
         //Bukkit.broadcast(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message, "meggachat.admin");
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(PlayerChatEvent event) {
         Player chatter = event.getPlayer();
 
