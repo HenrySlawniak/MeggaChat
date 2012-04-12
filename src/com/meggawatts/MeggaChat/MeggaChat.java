@@ -19,6 +19,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new PipeListener(), this);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String Message = "";
+        String msg = "";
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
             if (player.hasPermission("meggachat.admin")) {
@@ -45,11 +46,12 @@ public class MeggaChat extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.DARK_RED + "/a off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
                     sender.sendMessage(ChatColor.DARK_RED + "/a <message> " + ChatColor.GREEN + "will send the message to all who have access to adminchat.");
                 }
-                Message = args[0];
+                msg = args[0];
                 if (args.length > 1) {
                     for (int i = 1; i < args.length; i++) {
-                        Message += " " + args[i];
+                        msg += " " + args[i];
                     }
+                    sendToAdmins(msg, player);
                 }
             }
 
@@ -62,7 +64,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     public void sendToAdmins(String Message, Player chatter) {
         for (Player player : getServer().getOnlinePlayers()) {
             if (player.hasPermission("meggachat.admin")) {
-                player.sendMessage(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "AdminChat" + ChatColor.WHITE + "] " + ChatColor.BOLD + chatter.getName() + ": " + ChatColor.GREEN + Message);
+                player.sendMessage(ChatColor.BOLD + "[" + ChatColor.DARK_AQUA + "AdminChat" + ChatColor.WHITE + "] " +  chatter.getName() + ": " + ChatColor.GREEN + Message);
             }
         }
     }

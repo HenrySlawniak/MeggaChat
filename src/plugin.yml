@@ -8,6 +8,9 @@ permissions:
   meggachat.admin:
     description: Full access to Admin Chat.
     default: op
+  meggachat.smoke:
+    description: Smoke.
+    default: op
 commands:
   a:
     usage: |
