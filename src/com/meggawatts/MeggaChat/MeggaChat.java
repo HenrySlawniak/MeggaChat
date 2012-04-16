@@ -19,7 +19,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new PipeListener(), this);
     }
 
     @Override
@@ -52,6 +51,9 @@ public class MeggaChat extends JavaPlugin implements Listener {
                         msg += " " + args[i];
                     }
                     sendToAdmins(msg, player);
+                }
+                if (args.length == 1){
+                    sendToAdmins(args[0], player);
                 }
             }
 
