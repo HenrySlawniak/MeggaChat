@@ -19,7 +19,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new PipeListener(), this);
     }
 
     @Override
@@ -52,6 +51,8 @@ public class MeggaChat extends JavaPlugin implements Listener {
                         msg += " " + args[i];
                     }
                     sendToAdmins(msg, player);
+                } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
+                    sendToAdmins(args[0], player);
                 }
             }
 
@@ -64,7 +65,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     public void sendToAdmins(String Message, Player chatter) {
         for (Player player : getServer().getOnlinePlayers()) {
             if (player.hasPermission("meggachat.admin")) {
-                player.sendMessage(ChatColor.BOLD + "[" + ChatColor.DARK_AQUA + "AdminChat" + ChatColor.WHITE + "] " +  chatter.getName() + ": " + ChatColor.GREEN + Message);
+                player.sendMessage(ChatColor.BOLD + "[" + ChatColor.DARK_AQUA + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message);
             }
         }
     }
