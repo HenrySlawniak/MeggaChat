@@ -52,7 +52,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
                     }
                     sendToAdmins(msg, player);
                 }
-                if (args.length == 1){
+                else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))){
                     sendToAdmins(args[0], player);
                 }
             }
