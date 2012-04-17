@@ -1,7 +1,6 @@
 package com.meggawatts.MeggaChat;
 
 import java.util.HashMap;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,6 +18,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
     }
 
     @Override
