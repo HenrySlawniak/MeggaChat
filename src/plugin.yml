@@ -8,50 +8,6 @@ permissions:
   meggachat.admin:
     description: Full access to Admin Chat.
     default: op
-  meggachat.color.0:
-    description: Gives Black as Color in PlayerList.
-  meggachat.color.1:
-    description: Gives Dark Blue as Color in PlayerList.
-  meggachat.color.2:
-    description: Gives Dark Green as Color in PlayerList.
-  meggachat.color.3:
-    description: Gives Dark Aqua as Color in PlayerList.
-  meggachat.color.4:
-    description: Gives Dark Red as Color in PlayerList.
-  meggachat.color.5:
-    description: Gives Dark Purple as Color in PlayerList.
-  meggachat.color.6:
-    description: Gives Gold as Color in PlayerList.
-  meggachat.color.7:
-    description: Gives Gray as Color in PlayerList.
-  meggachat.color.8:
-    description: Gives Dark Gray as Color in PlayerList.
-  meggachat.color.9:
-    description: Gives Blue as Color in PlayerList.
-  meggachat.color.a:
-    description: Gives Green as Color in PlayerList.
-  meggachat.color.b:
-    description: Gives Aqua as Color in PlayerList.
-  meggachat.color.c:
-    description: Gives Red as Color in PlayerList.
-  meggachat.color.d:
-    description: Gives Light Purple as Color in PlayerList.
-  meggachat.color.e:
-    description: Gives Yellow as Color in PlayerList.
-  meggachat.color.f:
-    description: Gives White as Color in PlayerList.
-  meggachat.color.k:
-    description: Gives Magic as Color in PlayerList.
-  meggachat.color.l:
-    description: Gives Bold as Color in PlayerList.
-  meggachat.color.m:
-    description: Gives Strikethrough as Color in PlayerList.
-  meggachat.color.n:
-    description: Gives Underline as Color in PlayerList.
-  meggachat.color.o:
-    description: Gives Italic as Color in PlayerList.
-  meggachat.color.r:
-    description: Gives Reset as Color in PlayerList.
 commands:
   a:
     usage: |
