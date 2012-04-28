@@ -19,6 +19,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
+        getServer().getPluginManager().registerEvents(new PipeListener(), this);
     }
 
     @Override
