@@ -16,7 +16,7 @@ public class PipeListener implements Listener {
         if ((event.hasItem()) && ((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && event.getItem().getType().equals(Material.GHAST_TEAR) && event.getPlayer().hasPermission("meggachat.smoke")) {
             double distance = 0.7D;
             Location player_loc = event.getPlayer().getLocation();
-            double rot_x = (player_loc.getYaw() + 50.0F) % 160.0F;
+            double rot_x = (player_loc.getYaw() + 90.0F) % 360.0F;
             double rot_y = player_loc.getPitch() * -1.0F;
             double rot_ycos = Math.cos(Math.toRadians(rot_y));
             double rot_ysin = Math.sin(Math.toRadians(rot_y));
