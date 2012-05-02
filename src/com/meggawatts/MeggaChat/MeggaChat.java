@@ -1,6 +1,8 @@
 package com.meggawatts.MeggaChat;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,13 +14,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 public class MeggaChat extends JavaPlugin implements Listener {
-
+    
+    Logger log = Logger.getLogger("Minecraft");
     HashMap adminschatting = new HashMap();
-
+    File PEX = new File("plugins//PermissionsEx.jar");
+    boolean PEXexists = PEX.exists();
+    
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
+        if (PEXexists) {
+            getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
+            log.info("[MeggaChat] Found PEX colored list enabled.");
+        }
+        else {
+            log.info("[MeggaChat] PEX not found, colored list disabled.");
+        }
+        getServer().getPluginManager().registerEvents(this, this);     
         getServer().getPluginManager().registerEvents(new PipeListener(), this);
     }
 
@@ -66,7 +77,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     public void sendToAdmins(String Message, Player chatter) {
         for (Player player : getServer().getOnlinePlayers()) {
             if (player.hasPermission("meggachat.admin")) {
-                player.sendMessage(ChatColor.BOLD + "[" + ChatColor.DARK_AQUA + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message);
+                player.sendMessage("[" + ChatColor.DARK_AQUA + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message);
             }
         }
     }
