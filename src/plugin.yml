@@ -10,6 +10,12 @@ permissions:
   meggachat.smoke:
     description: Smoke with ghast tear.
     default: op
+  meggachat.smoke.digfast:
+    description: Receive dig speed boost from blaze rod.
+    default: op
+  meggachat.smoke.runfast:
+    description: Receive run speed boost from blaze powder.
+    default: op
 commands:
   a:
     usage: |

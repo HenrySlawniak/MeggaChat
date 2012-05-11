@@ -24,7 +24,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     public void onEnable() {
         if (PEXexists) {
             getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
-            log.info("[MeggaChat] Found PEX colored list enabled.");
+            log.info("[MeggaChat] Found PEX, colored list enabled.");
         }
         else {
             log.info("[MeggaChat] PEX not found, colored list disabled.");
