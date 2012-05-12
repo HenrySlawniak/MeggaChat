@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
@@ -14,23 +15,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 public class MeggaChat extends JavaPlugin implements Listener {
-    
+
     Logger log = Logger.getLogger("Minecraft");
     HashMap adminschatting = new HashMap();
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
-    
+
     @Override
     public void onEnable() {
         if (PEXexists) {
             getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
             log.info("[MeggaChat] Found PEX, colored list enabled.");
-        }
-        else {
+        } else {
             log.info("[MeggaChat] PEX not found, colored list disabled.");
         }
-        getServer().getPluginManager().registerEvents(this, this);     
+        getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new PipeListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
     }
 
     @Override

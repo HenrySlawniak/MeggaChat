@@ -16,10 +16,13 @@ permissions:
   meggachat.smoke.runfast:
     description: Receive run speed boost from blaze powder.
     default: op
+  meggachat.fly:
+    description: Fly you fools!
+    default: op
 commands:
   a:
     usage: |
             /a on 
             /a off
             /a <message>
-            /a ?
+            /a ?            
