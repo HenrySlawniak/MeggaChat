@@ -1,5 +1,6 @@
 package com.meggawatts.MeggaChat;
 
+import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 import ru.tehkode.permissions.PermissionUser;
 
 public class ColoredListListener implements Listener {
+    Logger log = Logger.getLogger("Minecraft");
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(PlayerJoinEvent event) {
@@ -81,6 +83,9 @@ public class ColoredListListener implements Listener {
         if (target.getOption("ListColor").equals("r")) {
             player.setPlayerListName(ChatColor.RESET + player.getName());
         }
-
+        else {
+            player.setPlayerListName(player.getName());
+            log.info("player " + player.getName() + " did not get colored, defaulting to anme only");
+        }
     }
 }
