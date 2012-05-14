@@ -85,7 +85,7 @@ public class ColoredListListener implements Listener {
         }
         else {
             player.setPlayerListName(player.getName());
-            log.info("player " + player.getName() + " did not get colored, defaulting to anme only");
+            log.info("Player: " + player.getName() + " did not get colored, defaulting to name only");
         }
     }
 }
