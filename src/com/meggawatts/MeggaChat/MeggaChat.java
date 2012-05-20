@@ -15,19 +15,21 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 public class MeggaChat extends JavaPlugin implements Listener {
 
-    Logger log = Logger.getLogger("Minecraft");
+    public static final Logger log = Logger.getLogger("Minecraft");
     HashMap adminschatting = new HashMap();
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
 
     @Override
     public void onEnable() {
+        // Check for PEX
         if (PEXexists) {
             getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
             log.info("[MeggaChat] Found PEX, colored list enabled.");
         } else {
             log.info("[MeggaChat] PEX not found, colored list disabled.");
         }
+        // Register events
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new PipeListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -43,7 +45,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
         String msg = "";
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
-            if (player.hasPermission("meggachat.admin")) {
+            if (player.hasPermission("meggachat.admin") && label.equalsIgnoreCase("a")) {
                 if (args[0].equalsIgnoreCase("on")) {
                     adminschatting.put(sender, true);
                     sender.sendMessage(ChatColor.DARK_GREEN + "Admin Chat enabled");
@@ -66,10 +68,10 @@ public class MeggaChat extends JavaPlugin implements Listener {
                 } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
                     sendToAdmins(args[0], player);
                 }
+            } else if (!(sender.hasPermission("meggachat.admin"))) {
+                sender.sendMessage(ChatColor.DARK_RED + "No Permissions! Fear the rath of the turtle!");
             }
 
-        } else if (!(sender.hasPermission("meggachat.admin"))) {
-            sender.sendMessage(ChatColor.DARK_RED + "No Permissions!");
         }
         return true;
     }
@@ -89,6 +91,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
         if (adminschatting.containsKey(chatter)) {
             sendToAdmins(event.getMessage(), event.getPlayer());
             event.setCancelled(true);
+        } else if (!(chatter.hasPermission("meggachat.admin")) || !(adminschatting.containsKey(chatter))) {
         }
 
     }

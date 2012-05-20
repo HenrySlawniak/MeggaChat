@@ -11,7 +11,8 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 import ru.tehkode.permissions.PermissionUser;
 
 public class ColoredListListener implements Listener {
-    Logger log = Logger.getLogger("Minecraft");
+
+    public static final Logger log = Logger.getLogger("Minecraft");
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(PlayerJoinEvent event) {
@@ -82,10 +83,6 @@ public class ColoredListListener implements Listener {
         }
         if (target.getOption("ListColor").equals("r")) {
             player.setPlayerListName(ChatColor.RESET + player.getName());
-        }
-        else {
-            player.setPlayerListName(player.getName());
-            log.info("Player: " + player.getName() + " did not get colored, defaulting to name only");
         }
     }
 }
