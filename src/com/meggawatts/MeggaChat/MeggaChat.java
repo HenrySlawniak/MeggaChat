@@ -37,6 +37,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        // Clear hash map on disable
         adminschatting.clear();
     }
 
@@ -65,13 +66,30 @@ public class MeggaChat extends JavaPlugin implements Listener {
                         msg += " " + args[i];
                     }
                     sendToAdmins(msg, player);
+                }
+                if (args[0].equalsIgnoreCase("whofly")) {
+                    StringBuilder out = new StringBuilder();
+                    out.append(ChatColor.GREEN);
+                    out.append("Players Flying: ");
+                    out.append("\n");
+                    for (Player query : getServer().getOnlinePlayers()) {
+                        if (query.isFlying()) {
+                            out.append(ChatColor.RED);
+                            out.append(query.getName());
+                            out.append(", ");
+                        }
+                        String[] lines = out.toString().split("\n");
+                        for (String line : lines) {
+                            sender.sendMessage(line);
+                        }
+                    }
+
                 } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
                     sendToAdmins(args[0], player);
                 }
             } else if (!(sender.hasPermission("meggachat.admin"))) {
-                sender.sendMessage(ChatColor.DARK_RED + "No Permissions! Fear the rath of the turtle!");
+                sender.sendMessage(ChatColor.DARK_RED + "No Permissions!");
             }
-
         }
         return true;
     }
@@ -91,8 +109,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
         if (adminschatting.containsKey(chatter)) {
             sendToAdmins(event.getMessage(), event.getPlayer());
             event.setCancelled(true);
-        } else if (!(chatter.hasPermission("meggachat.admin")) || !(adminschatting.containsKey(chatter))) {
         }
-
     }
 }

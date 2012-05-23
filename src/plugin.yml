@@ -1,6 +1,6 @@
 name: MeggaChat
 main: com.meggawatts.MeggaChat.MeggaChat
-version: 1.8
+version: 1.9
 description: Comprehensive Lightweight Admin Chat Channel!
 author: meggawatts
 permissions:
@@ -25,4 +25,5 @@ commands:
             /a on 
             /a off
             /a <message>
-            /a ?            
+            /a whofly
+            /a ?   

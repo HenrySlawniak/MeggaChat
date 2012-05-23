@@ -13,7 +13,7 @@ public class PlayerListener implements Listener {
     public void PlayerLogin(PlayerJoinEvent event) {
         if (event.getPlayer().hasPermission("meggachat.fly")) {
             event.getPlayer().setAllowFlight(true);
-            log.info(event.getPlayer() + " is on the list, allowing flight.");
+            log.info(event.getPlayer().getName() + " is on the list, allowing flight.");
         }
     }
 }
