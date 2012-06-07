@@ -19,6 +19,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
     HashMap adminschatting = new HashMap();
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
+    StringBuilder out = new StringBuilder();
 
     @Override
     public void onEnable() {
@@ -33,6 +34,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new PipeListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        setupStringBuilder();
     }
 
     @Override
@@ -68,10 +70,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
                     sendToAdmins(msg, player);
                 }
                 if (args[0].equalsIgnoreCase("whofly")) {
-                    StringBuilder out = new StringBuilder();
-                    out.append(ChatColor.GREEN);
-                    out.append("Players Flying: ");
-                    out.append("\n");
                     for (Player query : getServer().getOnlinePlayers()) {
                         if (query.isFlying()) {
                             out.append(ChatColor.RED);
@@ -82,6 +80,8 @@ public class MeggaChat extends JavaPlugin implements Listener {
                         for (String line : lines) {
                             sender.sendMessage(line);
                         }
+                        clearStrings();
+
                     }
 
                 } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
@@ -110,5 +110,16 @@ public class MeggaChat extends JavaPlugin implements Listener {
             sendToAdmins(event.getMessage(), event.getPlayer());
             event.setCancelled(true);
         }
+    }
+
+    private void setupStringBuilder() {
+        out.append(ChatColor.GREEN);
+        out.append("Players Flying: ");
+        out.append("\n");
+    }
+    
+    private void clearStrings() {
+        out.delete(0, out.length());
+        setupStringBuilder();
     }
 }
