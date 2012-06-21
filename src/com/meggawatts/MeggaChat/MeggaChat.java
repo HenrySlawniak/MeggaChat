@@ -34,7 +34,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new PipeListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        setupStringBuilder();
     }
 
     @Override
@@ -70,6 +69,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
                     sendToAdmins(msg, player);
                 }
                 if (args[0].equalsIgnoreCase("whofly")) {
+                    setupStringBuilder("GREEN", "Players Flying:");
                     for (Player query : getServer().getOnlinePlayers()) {
                         if (query.isFlying()) {
                             out.append(ChatColor.RED);
@@ -84,11 +84,27 @@ public class MeggaChat extends JavaPlugin implements Listener {
 
                     }
 
-                } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
+                }
+                if (args[0].equalsIgnoreCase("whochat")) {
+                    setupStringBuilder("BLUE", "Admins Chatting:");
+                    for (Player query : getServer().getOnlinePlayers()) {
+                        if (adminschatting.containsKey(query)) {
+                            out.append(ChatColor.RED);
+                            out.append(query.getName());
+                            out.append(", ");
+                        }
+                        String[] lines = out.toString().split("\n");
+                        for (String line : lines) {
+                            sender.sendMessage(line);
+                        }
+                        clearStrings();
+                    }
+
+                } 
+                // TODO: Add command to reload TAB list colors.
+                else if (args.length == 1 && !(args[0].equalsIgnoreCase("whochat") || args[0].equalsIgnoreCase("whofly") || args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
                     sendToAdmins(args[0], player);
                 }
-            } else if (!(sender.hasPermission("meggachat.admin"))) {
-                sender.sendMessage(ChatColor.DARK_RED + "No Permissions!");
             }
         }
         return true;
@@ -112,14 +128,14 @@ public class MeggaChat extends JavaPlugin implements Listener {
         }
     }
 
-    private void setupStringBuilder() {
-        out.append(ChatColor.GREEN);
-        out.append("Players Flying: ");
+    private void setupStringBuilder(String color, String title) {
+        out.append(ChatColor.valueOf(color));
+        out.append(title);
         out.append("\n");
+        out.append(ChatColor.RESET);
     }
-    
+
     private void clearStrings() {
         out.delete(0, out.length());
-        setupStringBuilder();
     }
 }
