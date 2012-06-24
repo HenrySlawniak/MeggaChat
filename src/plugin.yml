@@ -1,6 +1,6 @@
 name: MeggaChat
 main: com.meggawatts.MeggaChat.MeggaChat
-version: 2.2
+version: 2.4
 description: Comprehensive Lightweight Admin Chat Channel!
 author: meggawatts
 permissions:
@@ -19,6 +19,12 @@ permissions:
   meggachat.fly:
     description: Fly you fools!
     default: op
+  meggachat.noharvest:
+    description: No harvesting from blocks.
+  meggachat.nothrow:
+    description: No dropping blocks. 
+  meggachat.nodeathdrop:
+    description: Inventory wiped on death.
 commands:
   a:
     usage: |
