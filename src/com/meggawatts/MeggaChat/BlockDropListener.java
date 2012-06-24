@@ -18,7 +18,7 @@ public class BlockDropListener implements Listener {
     Block blok;
     Player executor;
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreak(BlockBreakEvent event) {
         blok = event.getBlock();
         executor = event.getPlayer();
