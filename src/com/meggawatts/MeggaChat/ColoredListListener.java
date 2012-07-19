@@ -1,6 +1,7 @@
 package com.meggawatts.MeggaChat;
 
 import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

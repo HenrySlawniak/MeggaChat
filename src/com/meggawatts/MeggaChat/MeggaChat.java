@@ -3,6 +3,7 @@ package com.meggawatts.MeggaChat;
 import java.io.File;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,6 +20,8 @@ public class MeggaChat extends JavaPlugin implements Listener {
     HashMap adminschatting = new HashMap();
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
+    File AdminLog = new File("adminlog.log");
+    boolean adminlogexists = AdminLog.exists();
     StringBuilder out = new StringBuilder();
 
     @Override
@@ -35,6 +38,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new PipeListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         getServer().getPluginManager().registerEvents(new BlockDropListener(), this);
+        getServer().getPluginManager().registerEvents(new SignListener(), this);
     }
 
     @Override
@@ -101,8 +105,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
                         clearStrings();
                     }
 
-                } 
-                // TODO: Add command to reload TAB list colors.
+                } // TODO: Add command to reload TAB list colors.
                 else if (args.length == 1 && !(args[0].equalsIgnoreCase("whochat") || args[0].equalsIgnoreCase("whofly") || args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
                     sendToAdmins(args[0], player);
                 }
@@ -122,7 +125,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(PlayerChatEvent event) {
         Player chatter = event.getPlayer();
-
         if (adminschatting.containsKey(chatter)) {
             sendToAdmins(event.getMessage(), event.getPlayer());
             event.setCancelled(true);
@@ -133,7 +135,6 @@ public class MeggaChat extends JavaPlugin implements Listener {
         out.append(ChatColor.valueOf(color));
         out.append(title);
         out.append("\n");
-        out.append(ChatColor.RESET);
     }
 
     private void clearStrings() {
