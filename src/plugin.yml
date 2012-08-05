@@ -22,7 +22,7 @@ permissions:
   meggachat.noharvest:
     description: No harvesting from blocks.
   meggachat.nothrow:
-    description: No dropping blocks. 
+    description: No dropping blocks. But gains dupe flint.
   meggachat.nodeathdrop:
     description: Inventory wiped on death.
 commands:
