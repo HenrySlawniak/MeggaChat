@@ -4,6 +4,8 @@
  */
 package com.meggawatts.MeggaChat;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,14 +21,18 @@ import org.bukkit.inventory.ItemStack;
  */
 public class DupeListener implements Listener {
 
+    public static HashSet blocked = new HashSet();
+
     @EventHandler(priority = EventPriority.NORMAL)
     public boolean onclick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        Material clicked = event.getClickedBlock().getType();
-        Byte clickeddat = event.getClickedBlock().getData();
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
                 && event.getItem().getType().equals(Material.FLINT)
-                && player.hasPermission("meggachat.nothrow")) {
+                && player.hasPermission("meggachat.nothrow")
+                && !(blocked.contains(event.getClickedBlock().getTypeId()))) {
+
+            Material clicked = event.getClickedBlock().getType();
+            Byte clickeddat = event.getClickedBlock().getData();
             if (clicked.equals(Material.WOOL)
                     || clicked.equals(Material.LOG)
                     || clicked.equals(Material.LEAVES)
@@ -40,12 +46,6 @@ public class DupeListener implements Listener {
                 player.getInventory().addItem(new ItemStack(clicked.getId(), 64));
                 player.updateInventory();
             }
-
-        }
-        else if (event.getAction().equals(Action.RIGHT_CLICK_AIR)
-                || event.getAction().equals(Action.LEFT_CLICK_BLOCK)
-                || event.getAction().equals(Action.LEFT_CLICK_AIR)){
-            return false;
         }
         return false;
     }

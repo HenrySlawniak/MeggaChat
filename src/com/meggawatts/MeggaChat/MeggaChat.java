@@ -2,6 +2,7 @@ package com.meggawatts.MeggaChat;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 
 public class MeggaChat extends JavaPlugin implements Listener {
 
@@ -20,26 +22,25 @@ public class MeggaChat extends JavaPlugin implements Listener {
     HashMap adminschatting = new HashMap();
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
-    File AdminLog = new File("adminlog.log");
-    boolean adminlogexists = AdminLog.exists();
-    StringBuilder out = new StringBuilder();
+    String channelname;
+    ChatColor channelcolor;
+    ChatColor messagecolor;
+    ChatColor sendercolor;
 
     @Override
     public void onEnable() {
-        // Check for PEX
-        if (PEXexists) {
-            getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
-            log.info("[MeggaChat] Found PEX, colored list enabled.");
-        } else {
-            log.info("[MeggaChat] PEX not found, colored list disabled.");
-        }
-        // Register events
-        getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new PipeListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockDropListener(), this);
-        getServer().getPluginManager().registerEvents(new SignListener(), this);
-        getServer().getPluginManager().registerEvents(new DupeListener(), this);
+        setupConfig();
+        registerEvents();
+        setupBlacklist();
+    }
+
+    public void setupConfig() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        channelname = getConfig().getString("channelname");
+        channelcolor = ChatColor.valueOf(getConfig().getString("channelcolor"));
+        messagecolor = ChatColor.valueOf(getConfig().getString("messagecolor"));
+        sendercolor = ChatColor.valueOf(getConfig().getString("sendercolor"));
     }
 
     @Override
@@ -73,41 +74,7 @@ public class MeggaChat extends JavaPlugin implements Listener {
                         msg += " " + args[i];
                     }
                     sendToAdmins(msg, player);
-                }
-                if (args[0].equalsIgnoreCase("whofly")) {
-                    setupStringBuilder("GREEN", "Players Flying:");
-                    for (Player query : getServer().getOnlinePlayers()) {
-                        if (query.isFlying()) {
-                            out.append(ChatColor.RED);
-                            out.append(query.getName());
-                            out.append(", ");
-                        }
-                        String[] lines = out.toString().split("\n");
-                        for (String line : lines) {
-                            sender.sendMessage(line);
-                        }
-                        clearStrings();
-
-                    }
-
-                }
-                if (args[0].equalsIgnoreCase("whochat")) {
-                    setupStringBuilder("BLUE", "Admins Chatting:");
-                    for (Player query : getServer().getOnlinePlayers()) {
-                        if (adminschatting.containsKey(query)) {
-                            out.append(ChatColor.RED);
-                            out.append(query.getName());
-                            out.append(", ");
-                        }
-                        String[] lines = out.toString().split("\n");
-                        for (String line : lines) {
-                            sender.sendMessage(line);
-                        }
-                        clearStrings();
-                    }
-
-                } // TODO: Add command to reload TAB list colors.
-                else if (args.length == 1 && !(args[0].equalsIgnoreCase("whochat") || args[0].equalsIgnoreCase("whofly") || args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
+                } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
                     sendToAdmins(args[0], player);
                 }
             }
@@ -118,13 +85,13 @@ public class MeggaChat extends JavaPlugin implements Listener {
     public void sendToAdmins(String Message, Player chatter) {
         for (Player player : getServer().getOnlinePlayers()) {
             if (player.hasPermission("meggachat.admin")) {
-                player.sendMessage("[" + ChatColor.DARK_AQUA + "AdminChat" + ChatColor.WHITE + "] " + chatter.getName() + ": " + ChatColor.GREEN + Message);
+                player.sendMessage("[" + channelcolor + channelname + ChatColor.WHITE + "] " + sendercolor + chatter.getName() + ":" + ChatColor.WHITE + " " + messagecolor + Message);
             }
         }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    public void onPlayerChat(PlayerChatEvent event) {
         Player chatter = event.getPlayer();
         if (adminschatting.containsKey(chatter)) {
             sendToAdmins(event.getMessage(), event.getPlayer());
@@ -132,13 +99,27 @@ public class MeggaChat extends JavaPlugin implements Listener {
         }
     }
 
-    private void setupStringBuilder(String color, String title) {
-        out.append(ChatColor.valueOf(color));
-        out.append(title);
-        out.append("\n");
+    private void registerEvents() {
+        // Check for PEX
+        if (PEXexists) {
+            getServer().getPluginManager().registerEvents(new ColoredListListener(), this);
+            log.info("[MeggaChat] Found PEX, colored list enabled.");
+        } else {
+            log.info("[MeggaChat] PEX not found, colored list disabled.");
+        }
+        // Register events
+        getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new PipeListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockDropListener(), this);
+        getServer().getPluginManager().registerEvents(new SignListener(), this);
+        getServer().getPluginManager().registerEvents(new DupeListener(), this);
     }
 
-    private void clearStrings() {
-        out.delete(0, out.length());
+    private void setupBlacklist() {
+        List blacklist = getConfig().getList("dupeblacklist");
+        for(Object o : blacklist){
+            DupeListener.blocked.add(o);
+        }      
     }
 }
