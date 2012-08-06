@@ -22,9 +22,55 @@ permissions:
   meggachat.noharvest:
     description: No harvesting from blocks.
   meggachat.nothrow:
-    description: No dropping blocks. But gains dupe flint.
+    description: No dropping blocks. But gives dupe flint.
   meggachat.nodeathdrop:
     description: Inventory wiped on death.
+  meggachat.signcolor.*:
+    description: gives access to all color codes on signs.
+  meggachat.signcolor.0:
+    description: gives access to black color code on signs.
+  meggachat.signcolor.1:
+    description: gives access to dark blue color code on signs.
+  meggachat.signcolor.2:
+    description: gives access to dark green color code on signs.
+  meggachat.signcolor.3:
+    description: gives access to dark aqua color code on signs.
+  meggachat.signcolor.4:
+    description: gives access to dark red color code on signs.
+  meggachat.signcolor.5:
+    description: gives access to purple color code on signs.
+  meggachat.signcolor.6:
+    description: gives access to gold color code on signs.
+  meggachat.signcolor.7:
+    description: gives access to grey color code on signs.
+  meggachat.signcolor.8:
+    description: gives access to dark grey color code on signs.
+  meggachat.signcolor.9:
+    description: gives access to indigo color code on signs.
+  meggachat.signcolor.a:
+    description: gives access to bright green color code on signs.
+  meggachat.signcolor.b:
+    description: gives access to aqua color code on signs.
+  meggachat.signcolor.c:
+    description: gives access to red color code on signs.
+  meggachat.signcolor.d:
+    description: gives access to pink color code on signs.
+  meggachat.signcolor.e:
+    description: gives access to yellow color code on signs.
+  meggachat.signcolor.f:
+    description: gives access to white color code on signs.
+  meggachat.signcolor.k:
+    description: gives access to random color code on signs.
+  meggachat.signcolor.l:
+    description: gives access to bold color code on signs.
+  meggachat.signcolor.m:
+    description: gives access to strike color code on signs.
+  meggachat.signcolor.n:
+    description: gives access to underline color code on signs.
+  meggachat.signcolor.o:
+    description: gives access to italic color code on signs.
+  meggachat.signcolor.r:
+    description: gives access to reset color code on signs.
 commands:
   a:
     usage: |
