@@ -5,7 +5,6 @@
 package com.meggawatts.MeggaChat;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,7 +41,12 @@ public class DupeListener implements Listener {
                     || clicked.equals(Material.WOOD)) {
                 player.getInventory().addItem(new ItemStack(clicked.getId(), 64, clickeddat));
                 player.updateInventory();
-            } else {
+            } else if (clicked.equals(Material.LONG_GRASS)){
+                player.getInventory().addItem(new ItemStack(clicked.getId(), 64, clickeddat));
+                player.updateInventory();
+                event.setCancelled(true);
+            }
+            else {
                 player.getInventory().addItem(new ItemStack(clicked.getId(), 64));
                 player.updateInventory();
             }

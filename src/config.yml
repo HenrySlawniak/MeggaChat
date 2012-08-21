@@ -1,12 +1,15 @@
-# channelname can be any string
+features:
+  AdminChat: true
+  TABList: true
+  EntityBlocking: true
+  DupeGravel: true
+  Pipes: true
+  FlyingPermission: true
+  ColoredSigns: true
 channelname: MeggaChat
-# channelcolor, messagecolor, and sendercolor must be a valid Bukkit ChatColor.
-# ChatColors can be found here: http://jd.bukkit.org/apidocs/org/bukkit/ChatColor.html
 channelcolor: DARK_AQUA
 messagecolor: GREEN
 sendercolor: WHITE
-# The list below controls the blacklist of the dupeflint.
-# Anything here cannot be duped with the dupeflint.
 dupeblacklist:
   - 7
   - 8
