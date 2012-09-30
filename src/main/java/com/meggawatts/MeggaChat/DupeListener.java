@@ -51,6 +51,9 @@ public class DupeListener implements Listener {
                 player.updateInventory();
             }
         }
+        else {
+            return true;
+        }
         return false;
     }
 }
