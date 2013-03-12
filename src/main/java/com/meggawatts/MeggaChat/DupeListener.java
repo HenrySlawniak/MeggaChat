@@ -5,6 +5,7 @@
 package com.meggawatts.MeggaChat;
 
 import java.util.HashSet;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,34 +26,37 @@ public class DupeListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public boolean onclick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
-                && event.getItem().getType().equals(Material.FLINT)
-                && player.hasPermission("meggachat.nothrow")
-                && !(blocked.contains(event.getClickedBlock().getTypeId()))) {
+        if (event.hasItem()) {
+            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
+                    && event.getItem().getType().equals(Material.FLINT)
+                    && player.hasPermission("meggachat.nothrow")
+                    && !(blocked.contains(event.getClickedBlock().getTypeId()))) {
 
-            Material clicked = event.getClickedBlock().getType();
-            Byte clickeddat = event.getClickedBlock().getData();
-            if (clicked.equals(Material.WOOL)
-                    || clicked.equals(Material.LOG)
-                    || clicked.equals(Material.LEAVES)
-                    || clicked.equals(Material.SANDSTONE)
-                    || clicked.equals(Material.SMOOTH_BRICK)
-                    || clicked.equals(Material.STEP)
-                    || clicked.equals(Material.WOOD)) {
-                player.getInventory().addItem(new ItemStack(clicked.getId(), 64, clickeddat));
-                player.updateInventory();
-            } else if (clicked.equals(Material.LONG_GRASS)){
-                player.getInventory().addItem(new ItemStack(clicked.getId(), 64, clickeddat));
-                player.updateInventory();
-                event.setCancelled(true);
+                Material clicked = event.getClickedBlock().getType();
+                Byte clickeddat = event.getClickedBlock().getData();
+                if (clicked.equals(Material.WOOL)
+                        || clicked.equals(Material.LOG)
+                        || clicked.equals(Material.LEAVES)
+                        || clicked.equals(Material.SANDSTONE)
+                        || clicked.equals(Material.SMOOTH_BRICK)
+                        || clicked.equals(Material.STEP)
+                        || clicked.equals(Material.WOOD)) {
+                    player.getInventory().addItem(new ItemStack(clicked.getId(), 64, clickeddat));
+                    player.updateInventory();
+                    //MeggaChat.logDupe(clicked, player);
+                } else if (clicked.equals(Material.LONG_GRASS)) {
+                    player.getInventory().addItem(new ItemStack(clicked.getId(), 64, clickeddat));
+                    player.updateInventory();
+                    //MeggaChat.logDupe(clicked, player);
+                    event.setCancelled(true);
+                } else {
+                    player.getInventory().addItem(new ItemStack(clicked.getId(), 64));
+                    player.updateInventory();
+                    //MeggaChat.logDupe(clicked, player);
+                }
             }
-            else {
-                player.getInventory().addItem(new ItemStack(clicked.getId(), 64));
-                player.updateInventory();
-            }
-        }
-        else {
-            return true;
+        } else {
+            return false;
         }
         return false;
     }

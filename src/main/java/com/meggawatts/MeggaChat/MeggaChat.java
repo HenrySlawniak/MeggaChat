@@ -16,6 +16,7 @@ public class MeggaChat extends JavaPlugin {
 
     public static final Logger log = Logger.getLogger("Minecraft");
     public static HashMap adminschatting = new HashMap();
+
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
     static String channelname;
@@ -54,26 +55,26 @@ public class MeggaChat extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String msg = "";
+        String msg;
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
             if (player.hasPermission("meggachat.admin") && label.equalsIgnoreCase("a")) {
-                if (args[0].equalsIgnoreCase("on")) {
+                if (args[0].equalsIgnoreCase("!on")) {
                     if (chaton) {
                         adminschatting.put(sender, true);
                         sender.sendMessage(ChatColor.DARK_GREEN + "Admin Chat enabled");
                     }
                 }
-                if (args[0].equalsIgnoreCase("off")) {
+                if (args[0].equalsIgnoreCase("!off")) {
                     if (chaton) {
                         adminschatting.remove(sender);
                         sender.sendMessage(ChatColor.DARK_RED + "Admin Chat disabled");
                     }
                 }
-                if (args[0].equalsIgnoreCase("?")) {
+                if (args[0].equalsIgnoreCase("!?")) {
                     if (chaton) {
-                        sender.sendMessage(ChatColor.DARK_RED + "/a on " + ChatColor.GREEN + "will toggle AdminChat mode on.");
-                        sender.sendMessage(ChatColor.DARK_RED + "/a off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
+                        sender.sendMessage(ChatColor.DARK_RED + "/a !on " + ChatColor.GREEN + "will toggle AdminChat mode on.");
+                        sender.sendMessage(ChatColor.DARK_RED + "/a !off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
                         sender.sendMessage(ChatColor.DARK_RED + "/a <message> " + ChatColor.GREEN + "will send the message to all who have access to adminchat.");
                     }
                 }
@@ -93,6 +94,7 @@ public class MeggaChat extends JavaPlugin {
 
     public static void sendToAdmins(String Message, Player chatter) {
         if (chaton) {
+            log.info("[" + channelcolor + channelname + ChatColor.WHITE + "] " + sendercolor + chatter.getName() + ":" + ChatColor.WHITE + " " + messagecolor + Message);
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 if (player.hasPermission("meggachat.admin")) {
                     player.sendMessage("[" + channelcolor + channelname + ChatColor.WHITE + "] " + sendercolor + chatter.getName() + ":" + ChatColor.WHITE + " " + messagecolor + Message);

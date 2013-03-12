@@ -1,5 +1,6 @@
 package com.meggawatts.MeggaChat;
 
+
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
