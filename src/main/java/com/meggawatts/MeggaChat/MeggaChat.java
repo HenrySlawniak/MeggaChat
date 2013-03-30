@@ -84,7 +84,7 @@ public class MeggaChat extends JavaPlugin {
                         msg += " " + args[i];
                     }
                     sendToAdmins(msg, player);
-                } else if (args.length == 1 && !(args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off"))) {
+                } else if (args.length == 1 && !(args[0].contains("!"))) {
                     sendToAdmins(args[0], player);
                 }
             }
