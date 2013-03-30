@@ -56,6 +56,7 @@ public class MeggaChat extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String msg;
+        char commandpre = '!';
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
             if (player.hasPermission("meggachat.admin") && label.equalsIgnoreCase("a")) {
@@ -84,7 +85,7 @@ public class MeggaChat extends JavaPlugin {
                         msg += " " + args[i];
                     }
                     sendToAdmins(msg, player);
-                } else if (args.length == 1 && !(args[0].contains("!"))) {
+                } else if (args.length == 1 && !(args[0].charAt(0) == commandpre)) {
                     sendToAdmins(args[0], player);
                 }
             }
