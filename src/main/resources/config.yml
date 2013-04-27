@@ -2,10 +2,13 @@ features:
   AdminChat: true
   TABList: true
   EntityBlocking: true
+  PlayerPotionsBlocking: true
+  DispenserPotionsBlocking: true
   DupeGravel: true
   Pipes: true
   FlyingPermission: true
   ColoredSigns: true
+  SoundEffects: true
 channelname: MeggaChat
 channelcolor: DARK_AQUA
 messagecolor: GREEN
