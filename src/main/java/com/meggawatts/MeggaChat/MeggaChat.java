@@ -15,7 +15,8 @@ import org.bukkit.entity.Player;
 public class MeggaChat extends JavaPlugin {
 
     public static final Logger log = Logger.getLogger("Minecraft");
-    public static HashMap adminschatting = new HashMap();
+    @SuppressWarnings("rawtypes")
+	public static HashMap adminschatting = new HashMap();
 
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
@@ -23,6 +24,9 @@ public class MeggaChat extends JavaPlugin {
     static ChatColor channelcolor;
     static ChatColor messagecolor;
     static ChatColor sendercolor;
+    static boolean poton;
+    static boolean dpoton;
+    static boolean sfx;
     static boolean chaton;
     static boolean tabon;
     static boolean enton;
@@ -53,7 +57,8 @@ public class MeggaChat extends JavaPlugin {
         adminschatting.clear();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String msg;
         char commandpre = '!';
@@ -110,10 +115,13 @@ public class MeggaChat extends JavaPlugin {
         chaton = getConfig().getBoolean("features.AdminChat");
         tabon = getConfig().getBoolean("features.TABList");
         enton = getConfig().getBoolean("features.EntityBlocking");
+        poton = getConfig().getBoolean("features.PlayerPotionsBlocking");
+        dpoton = getConfig().getBoolean("features.DispenserPotionsBlocking");
         dupeon = getConfig().getBoolean("features.DupeGravel");
         pipeson = getConfig().getBoolean("features.Pipes");
         flyon = getConfig().getBoolean("features.FlyingPermission");
         signon = getConfig().getBoolean("features.ColoredSigns");
+        sfx = getConfig().getBoolean("features.SoundEffects");
         log.info("[MeggaChat] Enabling Selected Features.");
         if (tabon) {
             // Check for PEX
@@ -141,11 +149,15 @@ public class MeggaChat extends JavaPlugin {
         }
         if (signon) {
             getServer().getPluginManager().registerEvents(new SignListener(), this);
+        if (poton) {
+            getServer().getPluginManager().registerEvents(new PotionListener(), this);
+        }
         }
 
     }
 
-    private void setupBlacklist() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void setupBlacklist() {
         List blacklist = getConfig().getList("dupeblacklist");
         for (Object o : blacklist) {
             DupeListener.blocked.add(o);

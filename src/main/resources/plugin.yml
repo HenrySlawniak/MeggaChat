@@ -16,6 +16,12 @@ permissions:
   meggachat.smoke.runfast:
     description: Receive run speed boost from blaze powder.
     default: op
+  meggachat.phial:
+    description: Toggles nightvision with Nether Star.
+    default: op 
+  meggachat.ring:
+    description: Toggles invisibility and nausea with Gold Nugget.
+    default: op 
   meggachat.fly:
     description: Fly you fools!
     default: op
@@ -25,6 +31,9 @@ permissions:
     description: No dropping blocks. But gives dupe flint.
   meggachat.nodeathdrop:
     description: Inventory wiped on death.
+  meggachat.potions:
+    description: Allows use of potions.
+    default: op
   meggachat.signcolor.*:
     description: gives access to all color codes on signs.
   meggachat.signcolor.0:
