@@ -4,20 +4,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class MeggaChat extends JavaPlugin {
 
     public static final Logger log = Logger.getLogger("Minecraft");
     @SuppressWarnings("rawtypes")
-	public static HashMap adminschatting = new HashMap();
-
+    public static HashMap adminschatting = new HashMap();
     File PEX = new File("plugins//PermissionsEx.jar");
     boolean PEXexists = PEX.exists();
     static String channelname;
@@ -34,6 +32,7 @@ public class MeggaChat extends JavaPlugin {
     static boolean pipeson;
     static boolean flyon;
     static boolean signon;
+    static boolean nchanton;
 
     @Override
     public void onEnable() {
@@ -58,7 +57,7 @@ public class MeggaChat extends JavaPlugin {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String msg;
         char commandpre = '!';
@@ -122,6 +121,7 @@ public class MeggaChat extends JavaPlugin {
         flyon = getConfig().getBoolean("features.FlyingPermission");
         signon = getConfig().getBoolean("features.ColoredSigns");
         sfx = getConfig().getBoolean("features.SoundEffects");
+        nchanton = getConfig().getBoolean("features.EnchantmentBlocking");
         log.info("[MeggaChat] Enabling Selected Features.");
         if (tabon) {
             // Check for PEX
@@ -149,15 +149,17 @@ public class MeggaChat extends JavaPlugin {
         }
         if (signon) {
             getServer().getPluginManager().registerEvents(new SignListener(), this);
+        }
         if (poton) {
             getServer().getPluginManager().registerEvents(new PotionListener(), this);
         }
+        if (nchanton) {
+            getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
         }
-
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	private void setupBlacklist() {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void setupBlacklist() {
         List blacklist = getConfig().getList("dupeblacklist");
         for (Object o : blacklist) {
             DupeListener.blocked.add(o);

@@ -1,6 +1,6 @@
 name: MeggaChat
 main: com.meggawatts.MeggaChat.MeggaChat
-version: 4.3
+version: 4.4
 description: Comprehensive Lightweight Admin Chat Channel!
 author: meggawatts
 permissions:
@@ -33,6 +33,9 @@ permissions:
     description: Inventory wiped on death.
   meggachat.potions:
     description: Allows use of potions.
+    default: op
+  meggachat.enchant:
+    description: Allows enchanting items.
     default: op
   meggachat.signcolor.*:
     description: gives access to all color codes on signs.

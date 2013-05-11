@@ -4,6 +4,7 @@ features:
   EntityBlocking: true
   PlayerPotionsBlocking: true
   DispenserPotionsBlocking: true
+  EnchantmentBlocking: true
   DupeGravel: true
   Pipes: true
   FlyingPermission: true
