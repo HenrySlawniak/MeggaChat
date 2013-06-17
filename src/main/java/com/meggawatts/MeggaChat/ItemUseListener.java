@@ -39,7 +39,6 @@ public class ItemUseListener implements Listener {
         if (dispblock) {
             if (blockeditems.contains(i)) {
                 event.setCancelled(true);
-                return;
             }
         }
     }
