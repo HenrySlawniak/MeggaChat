@@ -27,7 +27,7 @@ public class ItemUseListener implements Listener {
     		if (!(event.getPlayer().hasPermission("meggachat.items")) && (blockeditems.contains(i))) {
                 event.setCancelled(true);
                 event.getPlayer().getInventory().remove(i);
-				event.getPlayer().sendMessage(ChatColor.DARK_RED + "Nope!");
+		event.getPlayer().sendMessage(ChatColor.DARK_RED + "Nope!");
     		}
     	}
     }
@@ -50,7 +50,6 @@ public class ItemUseListener implements Listener {
         if (!(event.getPlayer().hasPermission("meggachat.items")) && blockeditems.contains(i)) {
         	event.setCancelled(true);
         	event.getPlayer().getInventory().remove(i);
-            event.getPlayer().getInventory().addItem(new ItemStack(Material.RAW_FISH));
         }
     }
 }
