@@ -65,7 +65,7 @@ public class MeggaChat extends JavaPlugin {
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
             if (player.hasPermission("meggachat.admin") && label.equalsIgnoreCase("a")) {
-                if (args[0].charAt(0) == '!') {
+                if (args[0].charAt(0) == commandpre) {
                     processCommand(args[0], sender);
                 }
                 msg = args[0];
