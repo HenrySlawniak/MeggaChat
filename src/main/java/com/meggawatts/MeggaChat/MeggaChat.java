@@ -65,24 +65,8 @@ public class MeggaChat extends JavaPlugin {
         if ((args.length > 0) && ((sender instanceof Player))) {
             Player player = (Player) sender;
             if (player.hasPermission("meggachat.admin") && label.equalsIgnoreCase("a")) {
-                if (args[0].equalsIgnoreCase("!on")) {
-                    if (chaton) {
-                        adminschatting.put(sender, true);
-                        sender.sendMessage(ChatColor.DARK_GREEN + "Admin Chat enabled");
-                    }
-                }
-                if (args[0].equalsIgnoreCase("!off")) {
-                    if (chaton) {
-                        adminschatting.remove(sender);
-                        sender.sendMessage(ChatColor.DARK_RED + "Admin Chat disabled");
-                    }
-                }
-                if (args[0].equalsIgnoreCase("!?")) {
-                    if (chaton) {
-                        sender.sendMessage(ChatColor.DARK_RED + "/a !on " + ChatColor.GREEN + "will toggle AdminChat mode on.");
-                        sender.sendMessage(ChatColor.DARK_RED + "/a !off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
-                        sender.sendMessage(ChatColor.DARK_RED + "/a <message> " + ChatColor.GREEN + "will send the message to all who have access to adminchat.");
-                    }
+                if (args[0].charAt(0) == '!') {
+                    processCommand(args[0], sender);
                 }
                 msg = args[0];
                 if (args.length > 1) {
@@ -166,12 +150,35 @@ public class MeggaChat extends JavaPlugin {
             DupeListener.blocked.add(o);
         }
     }
-    
+
     @SuppressWarnings({"rawtypes", "unchecked"})
     private void setupItemBlacklist() {
         List blacklist = getConfig().getList("itemblacklist");
         for (Object o : blacklist) {
-        	ItemUseListener.blockeditems.add(o);
+            ItemUseListener.blockeditems.add(o);
+        }
+    }
+
+    private void processCommand(String action, CommandSender sender) {
+        String command = action.substring(1);
+        if (command.equalsIgnoreCase("on")) {
+            if (chaton) {
+                adminschatting.put(sender, true);
+                sender.sendMessage(ChatColor.DARK_GREEN + "Admin Chat enabled");
+            }
+        }
+        if (command.equalsIgnoreCase("off")) {
+            if (chaton) {
+                adminschatting.remove(sender);
+                sender.sendMessage(ChatColor.DARK_RED + "Admin Chat disabled");
+            }
+        }
+        if (command.equalsIgnoreCase("?")) {
+            if (chaton) {
+                sender.sendMessage(ChatColor.DARK_RED + "/a !on " + ChatColor.GREEN + "will toggle AdminChat mode on.");
+                sender.sendMessage(ChatColor.DARK_RED + "/a !off " + ChatColor.GREEN + "will toggle AdminChat mode off.");
+                sender.sendMessage(ChatColor.DARK_RED + "/a <message> " + ChatColor.GREEN + "will send the message to all who have access to adminchat.");
+            }
         }
     }
 }
