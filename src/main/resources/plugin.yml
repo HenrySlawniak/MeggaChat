@@ -31,8 +31,8 @@ permissions:
     description: No dropping blocks. But gives dupe flint.
   meggachat.nodeathdrop:
     description: Inventory wiped on death.
-  meggachat.potions:
-    description: Allows use of potions.
+  meggachat.items:
+    description: Allows use of blacklisted items.
     default: op
   meggachat.enchant:
     description: Allows enchanting items.

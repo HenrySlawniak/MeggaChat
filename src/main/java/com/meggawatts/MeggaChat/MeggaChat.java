@@ -22,8 +22,8 @@ public class MeggaChat extends JavaPlugin {
     static ChatColor channelcolor;
     static ChatColor messagecolor;
     static ChatColor sendercolor;
-    static boolean poton;
-    static boolean dpoton;
+    static boolean itemson;
+    static boolean dispblock;
     static boolean sfx;
     static boolean chaton;
     static boolean tabon;
@@ -39,6 +39,7 @@ public class MeggaChat extends JavaPlugin {
         setupConfig();
         registerEvents();
         setupBlacklist();
+        setupItemBlacklist();
     }
 
     public void setupConfig() {
@@ -114,8 +115,8 @@ public class MeggaChat extends JavaPlugin {
         chaton = getConfig().getBoolean("features.AdminChat");
         tabon = getConfig().getBoolean("features.TABList");
         enton = getConfig().getBoolean("features.EntityBlocking");
-        poton = getConfig().getBoolean("features.PlayerPotionsBlocking");
-        dpoton = getConfig().getBoolean("features.DispenserPotionsBlocking");
+        itemson = getConfig().getBoolean("features.ItemUseBlocking");
+        dispblock = getConfig().getBoolean("features.DispenserBlocking");
         dupeon = getConfig().getBoolean("features.DupeGravel");
         pipeson = getConfig().getBoolean("features.Pipes");
         flyon = getConfig().getBoolean("features.FlyingPermission");
@@ -150,8 +151,8 @@ public class MeggaChat extends JavaPlugin {
         if (signon) {
             getServer().getPluginManager().registerEvents(new SignListener(), this);
         }
-        if (poton) {
-            getServer().getPluginManager().registerEvents(new PotionListener(), this);
+        if (itemson) {
+            getServer().getPluginManager().registerEvents(new ItemUseListener(), this);
         }
         if (nchanton) {
             getServer().getPluginManager().registerEvents(new EnchantmentListener(), this);
@@ -163,6 +164,14 @@ public class MeggaChat extends JavaPlugin {
         List blacklist = getConfig().getList("dupeblacklist");
         for (Object o : blacklist) {
             DupeListener.blocked.add(o);
+        }
+    }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void setupItemBlacklist() {
+        List blacklist = getConfig().getList("itemblacklist");
+        for (Object o : blacklist) {
+        	ItemUseListener.blockeditems.add(o);
         }
     }
 }

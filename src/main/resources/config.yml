@@ -2,8 +2,8 @@ features:
   AdminChat: true
   TABList: true
   EntityBlocking: true
-  PlayerPotionsBlocking: true
-  DispenserPotionsBlocking: true
+  ItemUseBlocking: true
+  DispenserBlocking: true
   EnchantmentBlocking: true
   DupeGravel: true
   Pipes: true
@@ -33,4 +33,15 @@ dupeblacklist:
   - 90
   - 93
   - 94
-  - 119
+  - 119 
+itemblacklist:
+- 259
+- 325
+- 326
+- 327
+- 332
+- 344
+- 373
+- 383
+- 384
+- 385
