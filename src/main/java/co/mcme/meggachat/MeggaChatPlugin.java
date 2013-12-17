@@ -151,7 +151,6 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             channelCommands.get(command).processCommand(command, event.getMessage(), event.getPlayer());
             event.setCancelled(true);
         }
-        System.out.println(command);
     }
 
     public void writeDefaultConfig(File config) {
