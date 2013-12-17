@@ -45,10 +45,13 @@ public class Permissions {
     private final HashMap<Character, Permission> colorPermissions = new HashMap();
     @Getter
     private final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
+    @Getter
+    private final HashMap<Character, Permission> tabColorPermissions = new HashMap();
 
     public Permissions() {
         for (ChatColor col : ChatColor.values()) {
             colorPermissions.put(col.getChar(), new Permission("meggachat.signcolor." + col.getChar(), PermissionDefault.OP));
+            tabColorPermissions.put(col.getChar(), new Permission("meggachat.tab." + col.getChar(), PermissionDefault.FALSE));
         }
     }
 
