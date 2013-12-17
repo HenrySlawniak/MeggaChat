@@ -21,6 +21,7 @@ import co.mcme.meggachat.listeners.ColoredSignListener;
 import co.mcme.meggachat.listeners.DispenserListener;
 import co.mcme.meggachat.listeners.DupeFlintListener;
 import co.mcme.meggachat.listeners.EnchantmentListener;
+import co.mcme.meggachat.listeners.PipeListener;
 import co.mcme.meggachat.utilities.Logger;
 import co.mcme.meggachat.utilities.Permissions;
 import java.io.File;
@@ -114,6 +115,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             Logger.info("Blocking " + usecount + " materials from being used.");
         }
         if (conf.getFeatures().isPipes()) {
+            serverInstance.getPluginManager().registerEvents(new PipeListener(), this);
             Logger.info("Enabling pipes.");
         }
         if (conf.getFeatures().isSoundeffects()) {
