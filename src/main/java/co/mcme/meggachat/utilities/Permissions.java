@@ -15,7 +15,9 @@
  */
 package co.mcme.meggachat.utilities;
 
+import java.util.HashMap;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -35,4 +37,15 @@ public class Permissions {
     private static final Permission enchantmentPermission = new Permission("meggachat.enchant", PermissionDefault.OP);
     @Getter
     private static final Permission useDupeFlintPermission = new Permission("meggachat.dupe", PermissionDefault.OP);
+    @Getter
+    private static final HashMap<Character, Permission> colorPermissions = new HashMap();
+    @Getter
+    private static final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
+
+    public Permissions() {
+        for (ChatColor col : ChatColor.values()) {
+            colorPermissions.put(col.getChar(), new Permission("meggachat.signcolor." + col.getChar(), PermissionDefault.OP));
+        }
+    }
+
 }

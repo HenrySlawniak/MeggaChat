@@ -15,6 +15,7 @@
  */
 package co.mcme.meggachat.listeners;
 
+import co.mcme.meggachat.utilities.Permissions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -53,6 +54,6 @@ public class ColoredSignListener implements Listener {
 
     private boolean checkAuth(Player player, int color) {
         char col = colors.charAt(color);
-        return (color == 0) || player.hasPermission("meggachat.signcolor." + col) || player.hasPermission("meggachat.signcolor.*");
+        return (color == 0) || player.hasPermission(Permissions.getColorPermissions().get(col)) || player.hasPermission(Permissions.getAllColorsPermission());
     }
 }
