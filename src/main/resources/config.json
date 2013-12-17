@@ -1,4 +1,5 @@
 {
+    "configVersion": "3.0",
     "features": {
         "adminchat": true,
         "tablist": true,

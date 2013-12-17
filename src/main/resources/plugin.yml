@@ -1,8 +1,5 @@
-name: MeggaChat
+name: ${project.artifactId}
 main: co.mcme.meggachat.MeggaChatPlugin
-version: 3.0
+version: ${project.version}
 description: Comprehensive Lightweight Admin Chat Channel!
 author: meggawatts
-permissions:
-    meggachat.channel.a:
-        default: op

@@ -23,6 +23,9 @@ public class MeggaChatConfig {
 
     @Getter
     @Setter
+    private String configVersion;
+    @Getter
+    @Setter
     private Features features;
     @Getter
     @Setter

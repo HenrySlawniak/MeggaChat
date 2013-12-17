@@ -60,6 +60,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     private HashMap<String, ChatChannel> channelCommands = new HashMap();
     @Getter
     private static Permissions permissionsUtil = new Permissions();
+    private static final String configVersionExpected = "3.0";
 
     @Override
     public void onEnable() {
@@ -75,8 +76,17 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         } else {
             loadConfig(config);
         }
-        saveConfig(config);
-        registerEvents();
+        if (conf.getConfigVersion() == null) {
+            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            Logger.info("TO generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(this);
+        } else if (!conf.getConfigVersion().equals(configVersionExpected)) {
+            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            Logger.info("TO generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(this);
+        } else {
+            registerEvents();
+        }
     }
 
     public void registerEvents() {
