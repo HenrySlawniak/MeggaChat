@@ -17,7 +17,10 @@ package co.mcme.meggachat;
 
 import co.mcme.meggachat.configuration.ChatChannel;
 import co.mcme.meggachat.configuration.MeggaChatConfig;
+import co.mcme.meggachat.listeners.ColoredSignListener;
+import co.mcme.meggachat.listeners.DispenserListener;
 import co.mcme.meggachat.listeners.DupeFlintListener;
+import co.mcme.meggachat.listeners.EnchantmentListener;
 import co.mcme.meggachat.utilities.Logger;
 import java.io.File;
 import java.io.IOException;
@@ -65,19 +68,57 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         } else {
             loadConfig(config);
         }
+        saveConfig(config);
+        registerEvents();
+    }
+
+    public void registerEvents() {
         if (conf.getFeatures().isAdminchat()) {
+            Logger.info("Enabling chat channels.");
+            serverInstance.getPluginManager().registerEvents(this, this);
             for (ChatChannel cc : conf.getChannels()) {
                 serverInstance.getPluginManager().registerEvents(cc, this);
                 channelCommands.put(cc.getCommand(), cc);
             }
         }
-        saveConfig(config);
-        serverInstance.getPluginManager().registerEvents(this, this);
-        serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), this);
-        int dupecount = conf.getDupeblacklist().toMaterials().size();
-        int usecount = conf.getItemuseblacklist().toMaterials().size();
-        Logger.info("Blocking " + dupecount + " materials from being duped.");
-        Logger.info("Blocking " + usecount + " materials from being used.");
+        if (conf.getFeatures().isColoredsigns()) {
+            Logger.info("Enabling colored signs.");
+            serverInstance.getPluginManager().registerEvents(new ColoredSignListener(), this);
+        }
+        if (conf.getFeatures().isDispenserblocking()) {
+            Logger.info("Enabling dispenser blocking.");
+            serverInstance.getPluginManager().registerEvents(new DispenserListener(), this);
+        }
+        if (conf.getFeatures().isDupeflint()) {
+            Logger.info("Enabling dupe flint.");
+            serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), this);
+            int dupecount = conf.getDupeblacklist().toMaterials().size();
+            Logger.info("Blocking " + dupecount + " materials from being duped.");
+        }
+        if (conf.getFeatures().isEnchantmentblocking()) {
+            Logger.info("Enabling enchantment blocking.");
+            serverInstance.getPluginManager().registerEvents(new EnchantmentListener(), this);
+        }
+        if (conf.getFeatures().isEntityblocking()) {
+            Logger.info("Enabling entity blocking.");
+        }
+        if (conf.getFeatures().isFlyingpermission()) {
+            Logger.info("Enabling flying permission.");
+        }
+        if (conf.getFeatures().isItemuseblocking()) {
+            Logger.info("Enabling item use blocking.");
+            int usecount = conf.getItemuseblacklist().toMaterials().size();
+            Logger.info("Blocking " + usecount + " materials from being used.");
+        }
+        if (conf.getFeatures().isPipes()) {
+            Logger.info("Enabling pipes.");
+        }
+        if (conf.getFeatures().isSoundeffects()) {
+            Logger.info("Enabling sound effects.");
+        }
+        if (conf.getFeatures().isTablist()) {
+            Logger.info("Enabling player list coloring.");
+        }
     }
 
     @EventHandler

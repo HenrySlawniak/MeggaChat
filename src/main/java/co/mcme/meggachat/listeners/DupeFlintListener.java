@@ -16,6 +16,7 @@
 package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
+import co.mcme.meggachat.utilities.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,15 +32,17 @@ public class DupeFlintListener implements Listener {
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent event) {
-        if (event.hasItem() && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (event.getItem().getType().equals(Material.FLINT)) {
-                Block clicked = event.getClickedBlock();
-                Player target = event.getPlayer();
-                if (!MeggaChatPlugin.getConf().getDupeblacklist().isBlocked(clicked.getType())) {
-                    ItemStack item = new ItemStack(clicked.getType(), 64, clicked.getData());
-                    target.getInventory().addItem(item);
-                    target.updateInventory();
-                    target.sendMessage(ChatColor.DARK_PURPLE + "Enjoy your " + clicked.getType());
+        if (event.getPlayer().hasPermission(Permissions.getUseDupeFlintPermission())) {
+            if (event.hasItem() && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                if (event.getItem().getType().equals(Material.FLINT)) {
+                    Block clicked = event.getClickedBlock();
+                    Player target = event.getPlayer();
+                    if (!MeggaChatPlugin.getConf().getDupeblacklist().isBlocked(clicked.getType())) {
+                        ItemStack item = new ItemStack(clicked.getType(), 64, clicked.getData());
+                        target.getInventory().addItem(item);
+                        target.updateInventory();
+                        target.sendMessage(ChatColor.DARK_PURPLE + "Enjoy your " + clicked.getType());
+                    }
                 }
             }
         }
@@ -47,13 +50,15 @@ public class DupeFlintListener implements Listener {
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
-        if (event.getPlayer().getItemInHand().getType().equals(Material.FLINT)) {
-            if (event.getRightClicked() instanceof Player) {
-                Player clicked = (Player) event.getRightClicked();
-                event.getPlayer().getInventory().clear();
-                event.getPlayer().getInventory().setContents(clicked.getInventory().getContents());
-                event.getPlayer().getInventory().addItem(new ItemStack(Material.FLINT));
-                event.getPlayer().updateInventory();
+        if (event.getPlayer().hasPermission(Permissions.getUseDupeFlintPermission())) {
+            if (event.getPlayer().getItemInHand().getType().equals(Material.FLINT)) {
+                if (event.getRightClicked() instanceof Player) {
+                    Player clicked = (Player) event.getRightClicked();
+                    event.getPlayer().getInventory().clear();
+                    event.getPlayer().getInventory().setContents(clicked.getInventory().getContents());
+                    event.getPlayer().getInventory().addItem(new ItemStack(Material.FLINT));
+                    event.getPlayer().updateInventory();
+                }
             }
         }
     }

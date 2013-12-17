@@ -1,0 +1,38 @@
+/*  This file is part of MeggaChat.
+ * 
+ *  MeggaChat is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  MeggaChat is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with MeggaChat.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package co.mcme.meggachat.utilities;
+
+import lombok.Getter;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+
+public class Permissions {
+
+    @Getter
+    private static final Permission basicPipePermission = new Permission("meggachat.pipes.basic", PermissionDefault.OP);
+    @Getter
+    private static final Permission diggingPipePermission = new Permission("meggachat.pipes.dig", PermissionDefault.OP);
+    @Getter
+    private static final Permission runningPipePermission = new Permission("meggachat.pipes.run", PermissionDefault.OP);
+    @Getter
+    private static final Permission phialPipePermission = new Permission("meggachat.pipes.phial", PermissionDefault.OP);
+    @Getter
+    private static final Permission ringPipePermission = new Permission("meggachat.pipes.ring", PermissionDefault.OP);
+    @Getter
+    private static final Permission enchantmentPermission = new Permission("meggachat.enchant", PermissionDefault.OP);
+    @Getter
+    private static final Permission useDupeFlintPermission = new Permission("meggachat.dupe", PermissionDefault.OP);
+}
