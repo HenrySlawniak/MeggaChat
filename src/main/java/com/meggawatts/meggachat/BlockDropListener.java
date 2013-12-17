@@ -1,4 +1,4 @@
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
 import java.util.List;
 import org.bukkit.block.Block;

@@ -1,4 +1,4 @@
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -14,7 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import static com.meggawatts.MeggaChat.MeggaChat.sfx;
+import static com.meggawatts.meggachat.MeggaChat.sfx;
 
 public class PipeListener implements Listener {
 

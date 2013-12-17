@@ -1,4 +1,4 @@
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
 import java.io.File;
 import java.util.HashMap;
@@ -49,6 +49,9 @@ public class MeggaChat extends JavaPlugin {
         channelcolor = ChatColor.valueOf(getConfig().getString("channelcolor"));
         messagecolor = ChatColor.valueOf(getConfig().getString("messagecolor"));
         sendercolor = ChatColor.valueOf(getConfig().getString("sendercolor"));
+        for (Object o : getConfig().getList("groups")) {
+            
+        }
     }
 
     @Override

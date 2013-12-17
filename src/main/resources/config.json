@@ -1,0 +1,71 @@
+{
+    "features": {
+        "adminchat": true,
+        "tablist": true,
+        "entityblocking": true,
+        "itemuseblocking": true,
+        "dispenserblocking": true,
+        "enchantmentblocking": true,
+        "dupeflint": true,
+        "pipes": true,
+        "flyingpermission": true,
+        "coloredsigns": true,
+        "soundeffects": true
+    },
+    "groups": [
+        {
+            "name": "default",
+            "color": "f"
+        }
+    ],
+    "dupeblacklist": {
+        "name": "dupe",
+        "items": [
+            "BEDROCK",
+            "WATER",
+            "STATIONARY_WATER",
+            "LAVA",
+            "STATIONARY_LAVA",
+            "LONG_GRASS",
+            "PISTON_EXTENSION",
+            "PISTON_MOVING_PIECE",
+            "FIRE",
+            "MOB_SPAWNER",
+            "CROPS",
+            "SIGN_POST",
+            "WOODEN_DOOR",
+            "WALL_SIGN",
+            "IRON_DOOR_BLOCK",
+            "PORTAL",
+            "DIODE_BLOCK_OFF",
+            "DIODE_BLOCK_ON",
+            "ENDER_PORTAL"
+        ]
+    },
+    "itemuseblacklist": {
+        "name": "use",
+        "items": [
+            "FLINT_AND_STEEL",
+            "BUCKET",
+            "WATER_BUCKET",
+            "LAVA_BUCKET",
+            "SNOW_BALL",
+            "EGG",
+            "POTION",
+            "MONSTER_EGG",
+            "EXP_BOTTLE",
+            "FIREBALL"
+        ]
+    },
+    "channels": [
+        {
+            "name": "MeggaChat",
+            "channelColor": "DARK_AQUA",
+            "messageColor": "GREEN",
+            "senderColor": "WHITE",
+            "command": "a",
+            "permission": "meggachat.channel.a",
+            "format": "%reset%[%channelcolor%%name%%reset%] %sendercolor%%sendername%: %messagecolor%%message%"
+        }
+    ]
+}

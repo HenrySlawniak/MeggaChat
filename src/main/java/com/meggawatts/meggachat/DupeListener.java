@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
 import java.util.HashSet;
 

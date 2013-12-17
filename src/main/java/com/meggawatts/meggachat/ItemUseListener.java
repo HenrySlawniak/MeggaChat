@@ -1,6 +1,6 @@
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
-import static com.meggawatts.MeggaChat.MeggaChat.dispblock;
+import static com.meggawatts.meggachat.MeggaChat.dispblock;
 
 import java.util.HashSet;
 

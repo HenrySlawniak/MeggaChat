@@ -1,18 +1,18 @@
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
 import java.util.logging.Logger;
-
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
+import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
 
 public class ColoredListListener implements Listener {
 
+    PermissionManager manager = Bukkit.getServicesManager().load(PermissionManager.class);
     public static final Logger log = Logger.getLogger("Minecraft");
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -34,8 +34,9 @@ public class ColoredListListener implements Listener {
     }
 
     public void ColorName(Player player, String name) {
-        PermissionUser target = PermissionsEx.getUser(player);
-        String color = target.getOption("ListColor");
+        PermissionUser target = manager.getUser(player.getName());
+        String color = "4";
+        //String color = target.getOption("ListColor");
         player.setPlayerListName("§" + color + name);
     }
 }

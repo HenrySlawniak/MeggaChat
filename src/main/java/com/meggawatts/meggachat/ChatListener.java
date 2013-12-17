@@ -1,4 +1,4 @@
-package com.meggawatts.MeggaChat;
+package com.meggawatts.meggachat;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
