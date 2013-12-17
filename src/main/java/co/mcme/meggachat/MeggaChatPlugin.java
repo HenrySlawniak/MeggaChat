@@ -17,6 +17,7 @@ package co.mcme.meggachat;
 
 import co.mcme.meggachat.configuration.ChatChannel;
 import co.mcme.meggachat.configuration.MeggaChatConfig;
+import co.mcme.meggachat.listeners.ColoredListListener;
 import co.mcme.meggachat.listeners.ColoredSignListener;
 import co.mcme.meggachat.listeners.DispenserListener;
 import co.mcme.meggachat.listeners.DroppedItemsListener;
@@ -138,6 +139,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             Logger.info("Enabling sound effects.");
         }
         if (conf.getFeatures().isTablist()) {
+            serverInstance.getPluginManager().registerEvents(new ColoredListListener(), this);
             Logger.info("Enabling player list coloring.");
         }
     }
