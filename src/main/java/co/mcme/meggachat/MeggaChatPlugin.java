@@ -60,7 +60,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     private HashMap<String, ChatChannel> channelCommands = new HashMap();
     @Getter
     private static Permissions permissionsUtil = new Permissions();
-    private static final String configVersionExpected = "3.0";
+    private static final String configVersionExpected = "5.0";
 
     @Override
     public void onEnable() {
