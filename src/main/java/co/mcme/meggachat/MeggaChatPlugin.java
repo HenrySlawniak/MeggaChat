@@ -74,7 +74,6 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         saveConfig(config);
         serverInstance.getPluginManager().registerEvents(this, this);
         serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), this);
-        
         int dupecount = conf.getDupeblacklist().toMaterials().size();
         int usecount = conf.getItemuseblacklist().toMaterials().size();
         Logger.info("Blocking " + dupecount + " materials from being duped.");
