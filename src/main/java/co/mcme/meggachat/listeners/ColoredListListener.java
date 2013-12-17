@@ -18,10 +18,11 @@ package co.mcme.meggachat.listeners;
 import co.mcme.meggachat.MeggaChatPlugin;
 import java.util.Map.Entry;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 
-public class ColoredListeListener {
+public class ColoredListListener implements Listener {
 
     public void onJoin(PlayerJoinEvent event) {
         Player joiner = event.getPlayer();
