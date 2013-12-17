@@ -24,23 +24,23 @@ import org.bukkit.permissions.PermissionDefault;
 public class Permissions {
 
     @Getter
-    private static final Permission basicPipePermission = new Permission("meggachat.pipes.basic", PermissionDefault.OP);
+    private final Permission basicPipePermission = new Permission("meggachat.pipes.basic", PermissionDefault.OP);
     @Getter
-    private static final Permission diggingPipePermission = new Permission("meggachat.pipes.dig", PermissionDefault.OP);
+    private final Permission diggingPipePermission = new Permission("meggachat.pipes.dig", PermissionDefault.OP);
     @Getter
-    private static final Permission runningPipePermission = new Permission("meggachat.pipes.run", PermissionDefault.OP);
+    private final Permission runningPipePermission = new Permission("meggachat.pipes.run", PermissionDefault.OP);
     @Getter
-    private static final Permission phialPipePermission = new Permission("meggachat.pipes.phial", PermissionDefault.OP);
+    private final Permission phialPipePermission = new Permission("meggachat.pipes.phial", PermissionDefault.OP);
     @Getter
-    private static final Permission ringPipePermission = new Permission("meggachat.pipes.ring", PermissionDefault.OP);
+    private final Permission ringPipePermission = new Permission("meggachat.pipes.ring", PermissionDefault.OP);
     @Getter
-    private static final Permission enchantmentPermission = new Permission("meggachat.enchant", PermissionDefault.OP);
+    private final Permission enchantmentPermission = new Permission("meggachat.enchant", PermissionDefault.OP);
     @Getter
-    private static final Permission useDupeFlintPermission = new Permission("meggachat.dupe", PermissionDefault.OP);
+    private final Permission useDupeFlintPermission = new Permission("meggachat.dupe", PermissionDefault.OP);
     @Getter
-    private static final HashMap<Character, Permission> colorPermissions = new HashMap();
+    private final HashMap<Character, Permission> colorPermissions = new HashMap();
     @Getter
-    private static final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
+    private final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
 
     public Permissions() {
         for (ChatColor col : ChatColor.values()) {

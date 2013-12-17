@@ -16,7 +16,6 @@
 package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
-import co.mcme.meggachat.utilities.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -32,7 +31,7 @@ public class DupeFlintListener implements Listener {
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent event) {
-        if (event.getPlayer().hasPermission(Permissions.getUseDupeFlintPermission())) {
+        if (event.getPlayer().hasPermission(MeggaChatPlugin.getPermissionsUtil().getUseDupeFlintPermission())) {
             if (event.hasItem() && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 if (event.getItem().getType().equals(Material.FLINT)) {
                     Block clicked = event.getClickedBlock();
@@ -50,7 +49,7 @@ public class DupeFlintListener implements Listener {
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
-        if (event.getPlayer().hasPermission(Permissions.getUseDupeFlintPermission())) {
+        if (event.getPlayer().hasPermission(MeggaChatPlugin.getPermissionsUtil().getUseDupeFlintPermission())) {
             if (event.getPlayer().getItemInHand().getType().equals(Material.FLINT)) {
                 if (event.getRightClicked() instanceof Player) {
                     Player clicked = (Player) event.getRightClicked();

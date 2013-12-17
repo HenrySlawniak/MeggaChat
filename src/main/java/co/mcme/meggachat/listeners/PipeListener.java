@@ -16,7 +16,6 @@
 package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
-import co.mcme.meggachat.utilities.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -60,13 +59,13 @@ public class PipeListener {
             Player p = event.getPlayer();
             switch (event.getItem().getType()) {
                 case GHAST_TEAR: {
-                    if (p.hasPermission(Permissions.getBasicPipePermission())) {
+                    if (p.hasPermission(MeggaChatPlugin.getPermissionsUtil().getBasicPipePermission())) {
                         event.getPlayer().getWorld().playEffect(getSmokeLocation(event.getPlayer().getLocation()), Effect.SMOKE, 4);
                     }
                     break;
                 }
                 case BLAZE_ROD: {
-                    if (p.hasPermission(Permissions.getDiggingPipePermission())) {
+                    if (p.hasPermission(MeggaChatPlugin.getPermissionsUtil().getDiggingPipePermission())) {
                         event.getPlayer().getWorld().playEffect(getSmokeLocation(event.getPlayer().getLocation()), Effect.SMOKE, 4);
                         event.getPlayer().sendMessage(ChatColor.ITALIC + "" + ChatColor.AQUA + "You take a puff from your trusty pipe, and are ready to dig!");
                         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5000, 1));
@@ -74,7 +73,7 @@ public class PipeListener {
                     break;
                 }
                 case BLAZE_POWDER: {
-                    if (p.hasPermission(Permissions.getRunningPipePermission())) {
+                    if (p.hasPermission(MeggaChatPlugin.getPermissionsUtil().getRunningPipePermission())) {
                         event.getPlayer().getWorld().playEffect(getSmokeLocation(event.getPlayer().getLocation()), Effect.SMOKE, 4);
                         event.getPlayer().sendMessage(ChatColor.ITALIC + "" + ChatColor.AQUA + "You take a puff from your trusty pipe, and are ready to run!");
                         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5000, 0));
@@ -82,14 +81,14 @@ public class PipeListener {
                     break;
                 }
                 case NETHER_STAR: {
-                    if (p.hasPermission(Permissions.getPhialPipePermission())) {
+                    if (p.hasPermission(MeggaChatPlugin.getPermissionsUtil().getPhialPipePermission())) {
                         event.getPlayer().getWorld().playEffect(getSmokeLocation(event.getPlayer().getLocation()), Effect.ENDER_SIGNAL, 4);
                         togglePhial(p);
                     }
                     break;
                 }
                 case GOLD_NUGGET: {
-                    if (p.hasPermission(Permissions.getRingPipePermission())) {
+                    if (p.hasPermission(MeggaChatPlugin.getPermissionsUtil().getRingPipePermission())) {
                         toggleRing(p);
                     }
                     break;

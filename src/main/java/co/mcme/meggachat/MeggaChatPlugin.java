@@ -22,6 +22,7 @@ import co.mcme.meggachat.listeners.DispenserListener;
 import co.mcme.meggachat.listeners.DupeFlintListener;
 import co.mcme.meggachat.listeners.EnchantmentListener;
 import co.mcme.meggachat.utilities.Logger;
+import co.mcme.meggachat.utilities.Permissions;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,6 +54,8 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     private static MeggaChatConfig conf = new MeggaChatConfig();
     @Getter
     private HashMap<String, ChatChannel> channelCommands = new HashMap();
+    @Getter
+    private static Permissions permissionsUtil = new Permissions();
 
     @Override
     public void onEnable() {

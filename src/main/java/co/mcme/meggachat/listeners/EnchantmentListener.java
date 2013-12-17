@@ -15,7 +15,7 @@
  */
 package co.mcme.meggachat.listeners;
 
-import co.mcme.meggachat.utilities.Permissions;
+import co.mcme.meggachat.MeggaChatPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
@@ -24,7 +24,7 @@ public class EnchantmentListener implements Listener {
 
     @EventHandler
     public void onEnchatment(PrepareItemEnchantEvent event) {
-        event.setCancelled(!event.getEnchanter().hasPermission(Permissions.getEnchantmentPermission()));
+        event.setCancelled(!event.getEnchanter().hasPermission(MeggaChatPlugin.getPermissionsUtil().getEnchantmentPermission()));
     }
 
 }
