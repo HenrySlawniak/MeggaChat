@@ -56,6 +56,10 @@ public class DupeFlintListener implements Listener {
                     event.getPlayer().getInventory().clear();
                     event.getPlayer().getInventory().setContents(clicked.getInventory().getContents());
                     event.getPlayer().getInventory().addItem(new ItemStack(Material.FLINT));
+                    event.getPlayer().getInventory().setHelmet(clicked.getInventory().getHelmet());
+                    event.getPlayer().getInventory().setChestplate(clicked.getInventory().getChestplate());
+                    event.getPlayer().getInventory().setLeggings(clicked.getInventory().getLeggings());
+                    event.getPlayer().getInventory().setBoots(clicked.getInventory().getBoots());
                     event.getPlayer().updateInventory();
                 }
             }
