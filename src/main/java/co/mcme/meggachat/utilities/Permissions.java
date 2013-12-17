@@ -38,6 +38,10 @@ public class Permissions {
     @Getter
     private final Permission useDupeFlintPermission = new Permission("meggachat.dupe", PermissionDefault.OP);
     @Getter
+    private final Permission flyPermission = new Permission("meggachat.fly", PermissionDefault.OP);
+    @Getter
+    private final Permission useItemPermission = new Permission("meggachat.ignoreitemuse", PermissionDefault.OP);
+    @Getter
     private final HashMap<Character, Permission> colorPermissions = new HashMap();
     @Getter
     private final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);

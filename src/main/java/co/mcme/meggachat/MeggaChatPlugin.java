@@ -19,8 +19,11 @@ import co.mcme.meggachat.configuration.ChatChannel;
 import co.mcme.meggachat.configuration.MeggaChatConfig;
 import co.mcme.meggachat.listeners.ColoredSignListener;
 import co.mcme.meggachat.listeners.DispenserListener;
+import co.mcme.meggachat.listeners.DroppedItemsListener;
 import co.mcme.meggachat.listeners.DupeFlintListener;
 import co.mcme.meggachat.listeners.EnchantmentListener;
+import co.mcme.meggachat.listeners.FlyingListener;
+import co.mcme.meggachat.listeners.ItemUseListener;
 import co.mcme.meggachat.listeners.PipeListener;
 import co.mcme.meggachat.utilities.Logger;
 import co.mcme.meggachat.utilities.Permissions;
@@ -105,12 +108,15 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         }
         if (conf.getFeatures().isEntityblocking()) {
             Logger.info("Enabling entity blocking.");
+            serverInstance.getPluginManager().registerEvents(new DroppedItemsListener(), this);
         }
         if (conf.getFeatures().isFlyingpermission()) {
             Logger.info("Enabling flying permission.");
+            serverInstance.getPluginManager().registerEvents(new FlyingListener(), this);
         }
         if (conf.getFeatures().isItemuseblocking()) {
             Logger.info("Enabling item use blocking.");
+            serverInstance.getPluginManager().registerEvents(new ItemUseListener(), this);
             int usecount = conf.getItemuseblacklist().toMaterials().size();
             Logger.info("Blocking " + usecount + " materials from being used.");
         }

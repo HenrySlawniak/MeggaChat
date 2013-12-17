@@ -1,4 +1,19 @@
-package com.meggawatts.meggachat;
+/*  This file is part of MeggaChat.
+ * 
+ *  MeggaChat is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  MeggaChat is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with MeggaChat.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package co.mcme.meggachat.listeners;
 
 import java.util.List;
 import org.bukkit.block.Block;
@@ -13,7 +28,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class BlockDropListener implements Listener {
+public class DroppedItemsListener implements Listener {
 
     Block blok;
     Player executor;
@@ -27,28 +42,21 @@ public class BlockDropListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void removeent(ItemSpawnEvent event) {
         Block spawnloc = event.getLocation().getBlock();
-        if (spawnloc.equals(blok) && executor.hasPermission("meggachat.noharvest")) {
-            event.setCancelled(true);
-        }
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void noThrow(PlayerDropItemEvent event) {
-        Player player = event.getPlayer();
         Item drop = event.getItemDrop();
-        if (player.hasPermission("meggachat.nothrow")) {
-            drop.remove();
-        }
+        drop.remove();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void noDropOnDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         List<ItemStack> drops = event.getDrops();
-        if (player.hasPermission("meggachat.nodeathdrop")) {
-            for (ItemStack drop : drops) {
-                drop.setAmount(0);
-            }
+        for (ItemStack drop : drops) {
+            drop.setAmount(0);
         }
     }
 }
