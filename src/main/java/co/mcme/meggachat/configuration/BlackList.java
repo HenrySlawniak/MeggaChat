@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class BlackList {
 
@@ -38,5 +39,10 @@ public class BlackList {
             materials.add(mat);
         }
         return materials;
+    }
+
+    @JsonIgnore
+    public boolean isBlocked(Material mat) {
+        return items.contains(mat.name());
     }
 }

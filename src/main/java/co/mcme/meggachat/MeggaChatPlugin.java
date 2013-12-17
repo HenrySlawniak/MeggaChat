@@ -17,12 +17,12 @@ package co.mcme.meggachat;
 
 import co.mcme.meggachat.configuration.ChatChannel;
 import co.mcme.meggachat.configuration.MeggaChatConfig;
+import co.mcme.meggachat.listeners.DupeFlintListener;
+import co.mcme.meggachat.utilities.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Getter;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
@@ -73,6 +73,12 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         }
         saveConfig(config);
         serverInstance.getPluginManager().registerEvents(this, this);
+        serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), this);
+        
+        int dupecount = conf.getDupeblacklist().toMaterials().size();
+        int usecount = conf.getItemuseblacklist().toMaterials().size();
+        Logger.info("Blocking " + dupecount + " materials from being duped.");
+        Logger.info("Blocking " + usecount + " materials from being used.");
     }
 
     @EventHandler
@@ -91,7 +97,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             conf = jsonMapper.readValue(defaultConfigStream, MeggaChatConfig.class);
             jsonMapper.writeValue(config, conf);
         } catch (IOException ex) {
-            Logger.getLogger(MeggaChatPlugin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.severe(ex.getMessage());
         }
     }
 
@@ -99,7 +105,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         try {
             conf = jsonMapper.readValue(config, MeggaChatConfig.class);
         } catch (IOException ex) {
-            Logger.getLogger(MeggaChatPlugin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.severe(ex.getMessage());
         }
     }
 
@@ -107,7 +113,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         try {
             jsonMapper.writeValue(config, conf);
         } catch (IOException ex) {
-            Logger.getLogger(MeggaChatPlugin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.severe(ex.getMessage());
         }
     }
 }
