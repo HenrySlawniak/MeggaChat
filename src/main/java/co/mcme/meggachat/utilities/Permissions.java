@@ -47,6 +47,8 @@ public class Permissions {
     private final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
     @Getter
     private final HashMap<Character, Permission> tabColorPermissions = new HashMap();
+    @Getter
+    private final Permission reloadPermission = new Permission("meggachat.reload", PermissionDefault.OP);
 
     public Permissions() {
         for (ChatColor col : ChatColor.values()) {

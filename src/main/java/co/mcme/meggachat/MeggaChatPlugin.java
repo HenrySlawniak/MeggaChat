@@ -15,6 +15,7 @@
  */
 package co.mcme.meggachat;
 
+import co.mcme.meggachat.commands.MeggaChatCommand;
 import co.mcme.meggachat.configuration.ChatChannel;
 import co.mcme.meggachat.configuration.MeggaChatConfig;
 import co.mcme.meggachat.listeners.ColoredListListener;
@@ -34,9 +35,14 @@ import java.io.InputStream;
 import java.util.HashMap;
 import lombok.Getter;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
@@ -50,17 +56,17 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     @Getter
     private static File pluginDataFolder;
     @Getter
-    private static ObjectMapper jsonMapper = new ObjectMapper()
+    private static final ObjectMapper jsonMapper = new ObjectMapper()
             .configure(SerializationConfig.Feature.INDENT_OUTPUT, true)
             .configure(SerializationConfig.Feature.WRITE_EMPTY_JSON_ARRAYS, true);
     @Getter
-    private static String fileSeperator = System.getProperty("file.separator");
+    private static final String fileSeperator = System.getProperty("file.separator");
     @Getter
     private static MeggaChatConfig conf = new MeggaChatConfig();
     @Getter
-    private HashMap<String, ChatChannel> channelCommands = new HashMap();
+    private static final HashMap<String, ChatChannel> channelCommands = new HashMap();
     @Getter
-    private static Permissions permissionsUtil = new Permissions();
+    private static final Permissions permissionsUtil = new Permissions();
     private static final String configVersionExpected = "5.0";
 
     @Override
@@ -77,71 +83,146 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         } else {
             loadConfig(config);
         }
-        if (conf.getConfigVersion() == null) {
-            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
-            Logger.info("TO generate a new config, rename the old config, and restart the server.");
-            serverInstance.getPluginManager().disablePlugin(this);
-        } else if (!conf.getConfigVersion().equals(configVersionExpected)) {
-            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
-            Logger.info("TO generate a new config, rename the old config, and restart the server.");
-            serverInstance.getPluginManager().disablePlugin(this);
-        } else {
-            registerEvents();
-        }
+        getCommand("MeggaChat").setExecutor(new MeggaChatCommand());
     }
 
-    public void registerEvents() {
+    public static void registerEvents() {
         if (conf.getFeatures().isAdminchat()) {
             Logger.info("Enabling chat channels.");
-            serverInstance.getPluginManager().registerEvents(this, this);
+            serverInstance.getPluginManager().registerEvents(pluginInstance, pluginInstance);
             for (ChatChannel cc : conf.getChannels()) {
-                serverInstance.getPluginManager().registerEvents(cc, this);
+                serverInstance.getPluginManager().registerEvents(cc, pluginInstance);
                 channelCommands.put(cc.getCommand(), cc);
             }
         }
         if (conf.getFeatures().isColoredsigns()) {
             Logger.info("Enabling colored signs.");
-            serverInstance.getPluginManager().registerEvents(new ColoredSignListener(), this);
+            serverInstance.getPluginManager().registerEvents(new ColoredSignListener(), pluginInstance);
         }
         if (conf.getFeatures().isDispenserblocking()) {
             Logger.info("Enabling dispenser blocking.");
-            serverInstance.getPluginManager().registerEvents(new DispenserListener(), this);
+            serverInstance.getPluginManager().registerEvents(new DispenserListener(), pluginInstance);
         }
         if (conf.getFeatures().isDupeflint()) {
             Logger.info("Enabling dupe flint.");
-            serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), this);
+            serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), pluginInstance);
             int dupecount = conf.getDupeblacklist().toMaterials().size();
             Logger.info("Blocking " + dupecount + " materials from being duped.");
         }
         if (conf.getFeatures().isEnchantmentblocking()) {
             Logger.info("Enabling enchantment blocking.");
-            serverInstance.getPluginManager().registerEvents(new EnchantmentListener(), this);
+            serverInstance.getPluginManager().registerEvents(new EnchantmentListener(), pluginInstance);
         }
         if (conf.getFeatures().isEntityblocking()) {
             Logger.info("Enabling entity blocking.");
-            serverInstance.getPluginManager().registerEvents(new DroppedItemsListener(), this);
+            serverInstance.getPluginManager().registerEvents(new DroppedItemsListener(), pluginInstance);
         }
         if (conf.getFeatures().isFlyingpermission()) {
             Logger.info("Enabling flying permission.");
-            serverInstance.getPluginManager().registerEvents(new FlyingListener(), this);
+            serverInstance.getPluginManager().registerEvents(new FlyingListener(), pluginInstance);
         }
         if (conf.getFeatures().isItemuseblocking()) {
             Logger.info("Enabling item use blocking.");
-            serverInstance.getPluginManager().registerEvents(new ItemUseListener(), this);
+            serverInstance.getPluginManager().registerEvents(new ItemUseListener(), pluginInstance);
             int usecount = conf.getItemuseblacklist().toMaterials().size();
             Logger.info("Blocking " + usecount + " materials from being used.");
         }
         if (conf.getFeatures().isPipes()) {
-            serverInstance.getPluginManager().registerEvents(new PipeListener(), this);
+            serverInstance.getPluginManager().registerEvents(new PipeListener(), pluginInstance);
             Logger.info("Enabling pipes.");
         }
         if (conf.getFeatures().isSoundeffects()) {
             Logger.info("Enabling sound effects.");
         }
         if (conf.getFeatures().isTablist()) {
-            serverInstance.getPluginManager().registerEvents(new ColoredListListener(), this);
+            serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
             Logger.info("Enabling player list coloring.");
         }
+        Logger.info("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
+    }
+
+    public static void registerEvents(CommandSender sender, boolean verbose) {
+        if (!(sender instanceof ConsoleCommandSender)) {
+            Logger.info(sender.getName() + " reloaded the config.");
+        }
+        if (conf.getFeatures().isAdminchat()) {
+            if (verbose) {
+                sender.sendMessage("Enabling chat channels.");
+            }
+            serverInstance.getPluginManager().registerEvents(pluginInstance, pluginInstance);
+            for (ChatChannel cc : conf.getChannels()) {
+                serverInstance.getPluginManager().registerEvents(cc, pluginInstance);
+                channelCommands.put(cc.getCommand(), cc);
+            }
+        }
+        if (conf.getFeatures().isColoredsigns()) {
+            if (verbose) {
+                sender.sendMessage("Enabling colored signs.");
+            }
+            serverInstance.getPluginManager().registerEvents(new ColoredSignListener(), pluginInstance);
+        }
+        if (conf.getFeatures().isDispenserblocking()) {
+            if (verbose) {
+                sender.sendMessage("Enabling dispenser blocking.");
+            }
+            serverInstance.getPluginManager().registerEvents(new DispenserListener(), pluginInstance);
+        }
+        if (conf.getFeatures().isDupeflint()) {
+            if (verbose) {
+                sender.sendMessage("Enabling dupe flint.");
+            }
+            serverInstance.getPluginManager().registerEvents(new DupeFlintListener(), pluginInstance);
+            int dupecount = conf.getDupeblacklist().toMaterials().size();
+            if (verbose) {
+                sender.sendMessage("Blocking " + dupecount + " materials from being duped.");
+            }
+        }
+        if (conf.getFeatures().isEnchantmentblocking()) {
+            if (verbose) {
+                sender.sendMessage("Enabling enchantment blocking.");
+            }
+            serverInstance.getPluginManager().registerEvents(new EnchantmentListener(), pluginInstance);
+        }
+        if (conf.getFeatures().isEntityblocking()) {
+            if (verbose) {
+                sender.sendMessage("Enabling entity blocking.");
+            }
+            serverInstance.getPluginManager().registerEvents(new DroppedItemsListener(), pluginInstance);
+        }
+        if (conf.getFeatures().isFlyingpermission()) {
+            if (verbose) {
+                sender.sendMessage("Enabling flying permission.");
+            }
+            serverInstance.getPluginManager().registerEvents(new FlyingListener(), pluginInstance);
+        }
+        if (conf.getFeatures().isItemuseblocking()) {
+            if (verbose) {
+                sender.sendMessage("Enabling item use blocking.");
+            }
+            serverInstance.getPluginManager().registerEvents(new ItemUseListener(), pluginInstance);
+            int usecount = conf.getItemuseblacklist().toMaterials().size();
+            if (verbose) {
+                sender.sendMessage("Blocking " + usecount + " materials from being used.");
+            }
+        }
+        if (conf.getFeatures().isPipes()) {
+            if (verbose) {
+                sender.sendMessage("Enabling pipes.");
+            }
+            serverInstance.getPluginManager().registerEvents(new PipeListener(), pluginInstance);
+        }
+        if (conf.getFeatures().isSoundeffects()) {
+            if (verbose) {
+                sender.sendMessage("Enabling sound effects.");
+            }
+        }
+        if (conf.getFeatures().isTablist()) {
+            if (verbose) {
+                sender.sendMessage("Enabling player list coloring.");
+            }
+            serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
+        }
+        sender.sendMessage("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
     }
 
     @EventHandler
@@ -163,11 +244,69 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
         }
     }
 
+    public static void reloadConfig(File config) {
+        channelCommands.clear();
+        conf = new MeggaChatConfig();
+        HandlerList.unregisterAll((Plugin) pluginInstance);
+        try {
+            conf = jsonMapper.readValue(config, MeggaChatConfig.class);
+        } catch (IOException ex) {
+            Logger.severe(ex.getMessage());
+            return;
+        }
+        if (conf.getConfigVersion() == null) {
+            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            Logger.info("To generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(pluginInstance);
+        } else if (!conf.getConfigVersion().equals(configVersionExpected)) {
+            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            Logger.info("To generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(pluginInstance);
+        } else {
+            registerEvents();
+        }
+    }
+
+    public static void reloadConfig(File config, CommandSender sender, boolean verbose) {
+        channelCommands.clear();
+        conf = new MeggaChatConfig();
+        HandlerList.unregisterAll((Plugin) pluginInstance);
+        try {
+            conf = jsonMapper.readValue(config, MeggaChatConfig.class);
+        } catch (IOException ex) {
+            Logger.severe(ex.getMessage());
+            return;
+        }
+        if (conf.getConfigVersion() == null) {
+            sender.sendMessage("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            sender.sendMessage("To generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(pluginInstance);
+        } else if (!conf.getConfigVersion().equals(configVersionExpected)) {
+            sender.sendMessage("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            sender.sendMessage("To generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(pluginInstance);
+        } else {
+            registerEvents(sender, verbose);
+        }
+    }
+
     public void loadConfig(File config) {
         try {
             conf = jsonMapper.readValue(config, MeggaChatConfig.class);
         } catch (IOException ex) {
             Logger.severe(ex.getMessage());
+            return;
+        }
+        if (conf.getConfigVersion() == null) {
+            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            Logger.info("To generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(this);
+        } else if (!conf.getConfigVersion().equals(configVersionExpected)) {
+            Logger.severe("Your config version is imcompatible with the current plugin, MeggaCHat has been disabled.");
+            Logger.info("To generate a new config, rename the old config, and restart the server.");
+            serverInstance.getPluginManager().disablePlugin(this);
+        } else {
+            registerEvents();
         }
     }
 
