@@ -2,7 +2,7 @@
     "configVersion": "5.0",
     "features": {
         "adminchat": true,
-        "tablist": true,
+        "tablist": false,
         "entityblocking": true,
         "itemuseblocking": true,
         "dispenserblocking": true,
