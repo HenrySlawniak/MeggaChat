@@ -16,12 +16,14 @@
 package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
+import co.mcme.meggachat.utilities.Logger;
 import java.util.Map.Entry;
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -33,6 +35,10 @@ public class ColoredListListener implements Listener {
 
     public ColoredListListener() {
         setupPermissions();
+        if (!permissionsInterface.hasGroupSupport()) {
+            Logger.severe("Your permissions plugin does not support groups, tab list coloring disabled.");
+            HandlerList.unregisterAll(this);
+        }
     }
 
     @EventHandler
@@ -55,7 +61,7 @@ public class ColoredListListener implements Listener {
 
     public void ColorName(Player player, String name) {
         for (Entry<String, String> entry : MeggaChatPlugin.getConf().getListcolorgroups().entrySet()) {
-            if (getPermissionsInterface().getPrimaryGroup(player).equals(entry.getKey())) {
+            if (permissionsInterface.getPrimaryGroup(player).equals(entry.getKey())) {
                 player.setPlayerListName(ChatColor.valueOf(entry.getValue()) + name);
                 return;
             }
