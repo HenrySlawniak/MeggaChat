@@ -18,6 +18,7 @@ package co.mcme.meggachat.configuration;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MeggaChatConfig {
 
@@ -39,8 +40,11 @@ public class MeggaChatConfig {
     @Getter
     @Setter
     private ArrayList<ChatChannel> channels = new ArrayList();
-    
+    @Getter
+    @Setter
+    private HashMap<String, String> listcolorgroups;
+
     public MeggaChatConfig() {
-        
+
     }
 }

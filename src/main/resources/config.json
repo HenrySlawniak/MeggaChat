@@ -1,8 +1,8 @@
 {
-    "configVersion": "5.0",
+    "configVersion": "5.1",
     "features": {
         "adminchat": true,
-        "tablist": false,
+        "tablist": true,
         "entityblocking": true,
         "itemuseblocking": true,
         "dispenserblocking": true,
@@ -68,5 +68,8 @@
             "permission": "meggachat.channel.a",
             "format": "%reset%[%channelcolor%%name%%reset%] %sendercolor%%sendername%: %messagecolor%%message%"
         }
-    ]
+    ],
+    "listcolorgroups": {
+        "default": "WHITE"
+    }
 }

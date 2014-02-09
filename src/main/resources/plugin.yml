@@ -3,6 +3,7 @@ main: co.mcme.meggachat.MeggaChatPlugin
 version: ${project.version}
 description: Comprehensive Lightweight Admin Chat Channel!
 author: meggawatts
+softdepend: [Vault]
 commands:
     meggachat:
         description: Allows managing MeggaChat

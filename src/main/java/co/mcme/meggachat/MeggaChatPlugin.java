@@ -42,7 +42,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
@@ -67,7 +66,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     private static final HashMap<String, ChatChannel> channelCommands = new HashMap();
     @Getter
     private static final Permissions permissionsUtil = new Permissions();
-    private static final String configVersionExpected = "5.0";
+    private static final String configVersionExpected = "5.1";
 
     @Override
     public void onEnable() {
@@ -135,8 +134,13 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             Logger.info("Enabling sound effects.");
         }
         if (conf.getFeatures().isTablist()) {
-            serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
-            Logger.info("Enabling player list coloring.");
+            if (!serverInstance.getPluginManager().isPluginEnabled("Vault")) {
+                Logger.severe("Player list coloring enabled, but Vault was not found, disabling colored tab list.");
+                conf.getFeatures().setTablist(false);
+            } else {
+                serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
+                Logger.info("Enabling player list coloring.");
+            }
         }
         Logger.info("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
     }
@@ -217,10 +221,18 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             }
         }
         if (conf.getFeatures().isTablist()) {
-            if (verbose) {
-                sender.sendMessage("Enabling player list coloring.");
+            if (!serverInstance.getPluginManager().isPluginEnabled("Vault")) {
+                if (verbose) {
+                    sender.sendMessage("Player list coloring enabled, but Vault was not found, disabling colored tab list.");
+                }
+                conf.getFeatures().setTablist(false);
+                return;
+            } else {
+                if (verbose) {
+                    sender.sendMessage("Enabling player list coloring.");
+                }
+                serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
             }
-            serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
         }
         sender.sendMessage("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
     }
@@ -317,4 +329,5 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             Logger.severe(ex.getMessage());
         }
     }
+
 }

@@ -17,13 +17,23 @@ package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
 import java.util.Map.Entry;
+import lombok.Getter;
+import net.milkbowl.vault.permission.Permission;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class ColoredListListener implements Listener {
+
+    @Getter
+    public static Permission permissionsInterface = null;
+
+    public ColoredListListener() {
+        setupPermissions();
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -44,12 +54,17 @@ public class ColoredListListener implements Listener {
     }
 
     public void ColorName(Player player, String name) {
-        Character color = 'f';
-        for (Entry<Character, Permission> entry : MeggaChatPlugin.getPermissionsUtil().getTabColorPermissions().entrySet()) {
-            if (player.hasPermission(entry.getValue())) {
-                color = entry.getKey();
+        for (Entry<String, String> entry : MeggaChatPlugin.getConf().getListcolorgroups().entrySet()) {
+            if (getPermissionsInterface().playerInGroup(player, entry.getKey())) {
+                player.setPlayerListName(ChatColor.valueOf(entry.getValue()) + name);
+                return;
             }
         }
-        player.setPlayerListName("§" + color + name);
+    }
+
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = MeggaChatPlugin.getServerInstance().getServicesManager().getRegistration(Permission.class);
+        permissionsInterface = rsp.getProvider();
+        return permissionsInterface != null;
     }
 }
