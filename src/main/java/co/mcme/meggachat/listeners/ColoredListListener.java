@@ -55,7 +55,7 @@ public class ColoredListListener implements Listener {
 
     public void ColorName(Player player, String name) {
         for (Entry<String, String> entry : MeggaChatPlugin.getConf().getListcolorgroups().entrySet()) {
-            if (getPermissionsInterface().playerInGroup(player, entry.getKey())) {
+            if (getPermissionsInterface().getPrimaryGroup(player).equals(entry.getKey())) {
                 player.setPlayerListName(ChatColor.valueOf(entry.getValue()) + name);
                 return;
             }
