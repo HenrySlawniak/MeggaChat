@@ -69,13 +69,13 @@ public class ChatChannel implements Listener {
     }
 
     public String formatMessage(String msg, Player p) {
-        return format.replaceAll("%reset%", ChatColor.RESET.toString())
+        return ChatColor.translateAlternateColorCodes('&', format.replaceAll("%reset%", ChatColor.RESET.toString())
                 .replaceAll("%channelcolor%", ChatColor.valueOf(channelColor).toString())
                 .replaceAll("%name%", name)
                 .replaceAll("%sendercolor%", ChatColor.valueOf(senderColor).toString())
                 .replaceAll("%sendername%", p.getDisplayName())
                 .replaceAll("%messagecolor%", ChatColor.valueOf(messageColor).toString())
-                .replaceAll("%message%", msg);
+                .replaceAll("%message%", msg));
     }
 
     public void processCommand(String cmd, String fullmsg, Player p) {
@@ -84,7 +84,7 @@ public class ChatChannel implements Listener {
         if (msg[0].charAt(0) == '!' && msg[0].length() > 1) {
             System.out.println("Got control character!");
             String control = msg[0].substring(1);
-            switch(control) {
+            switch (control) {
                 case "on": {
                     toggleOn(p);
                     break;
@@ -102,7 +102,7 @@ public class ChatChannel implements Listener {
             dispatchMessage(StringUtils.join(msg, " "), p);
         }
     }
-    
+
     public void toggleOn(Player p) {
         if (!toggledPlayers.contains(p.getName())) {
             toggledPlayers.add(p.getName());
@@ -111,7 +111,7 @@ public class ChatChannel implements Listener {
             p.sendMessage(ChatColor.RED + "You already had the channel '" + name + "' toggled on");
         }
     }
-    
+
     public void toggleOff(Player p) {
         if (toggledPlayers.contains(p.getName())) {
             toggledPlayers.remove(p.getName());
