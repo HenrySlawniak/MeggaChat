@@ -15,9 +15,7 @@
  */
 package co.mcme.meggachat.utilities;
 
-import java.util.HashMap;
 import lombok.Getter;
-import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -42,19 +40,8 @@ public class Permissions {
     @Getter
     private final Permission useItemPermission = new Permission("meggachat.ignoreitemuse", PermissionDefault.OP);
     @Getter
-    private final HashMap<Character, Permission> colorPermissions = new HashMap();
-    @Getter
     private final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
     @Getter
-    private final HashMap<Character, Permission> tabColorPermissions = new HashMap();
-    @Getter
     private final Permission reloadPermission = new Permission("meggachat.reload", PermissionDefault.OP);
-
-    public Permissions() {
-        for (ChatColor col : ChatColor.values()) {
-            colorPermissions.put(col.getChar(), new Permission("meggachat.signcolor." + col.getChar(), PermissionDefault.OP));
-            tabColorPermissions.put(col.getChar(), new Permission("meggachat.tab." + col.getChar(), PermissionDefault.FALSE));
-        }
-    }
 
 }

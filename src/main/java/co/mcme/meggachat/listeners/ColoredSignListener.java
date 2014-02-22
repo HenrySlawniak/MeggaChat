@@ -16,6 +16,7 @@
 package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,36 +25,16 @@ import org.bukkit.event.block.SignChangeEvent;
 
 public class ColoredSignListener implements Listener {
 
-    private final String delim = "&";
-    private final String colors = "0123456789abcdefklmnor";
-
     @EventHandler(priority = EventPriority.HIGH)
     public void signChange(SignChangeEvent event) {
         Player player = event.getPlayer();
-        for (int forInt = 0; forInt < 4; forInt++) {
-            if (event.getLine(forInt).isEmpty()) {
-                continue;
-            }
-            String[] splitLine = event.getLine(forInt).split(delim);
-            String nextLine = splitLine[0];
-            for (int i = 1; i < splitLine.length; i++) {
-                int col;
-                if (splitLine[i].length() == 0
-                        || (col = colors.indexOf(splitLine[i].toLowerCase().charAt(0))) == -1
-                        || (!checkAuth(player, col))
-                        || splitLine[i].length() <= 1) {
-                    nextLine += delim;
-                } else {
-                    nextLine += "\u00A7";
-                }
-                nextLine += splitLine[i];
-            }
-            event.setLine(forInt, nextLine);
+        for (int i = 0; i < event.getLines().length; i++) {
+            event.setLine(i, ChatColor.translateAlternateColorCodes('&', event.getLine(i)));
         }
-    }
-
-    private boolean checkAuth(Player player, int color) {
-        char col = colors.charAt(color);
-        return (color == 0) || player.hasPermission(MeggaChatPlugin.getPermissionsUtil().getColorPermissions().get(col)) || player.hasPermission(MeggaChatPlugin.getPermissionsUtil().getAllColorsPermission());
+        if (!player.hasPermission(MeggaChatPlugin.getPermissionsUtil().getAllColorsPermission())) {
+            for (int i = 0; i < event.getLines().length; i++) {
+                event.setLine(i, ChatColor.stripColor(event.getLine(i)));
+            }
+        }
     }
 }
