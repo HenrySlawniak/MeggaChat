@@ -21,11 +21,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.permissions.Permissible;
+import org.bukkit.permissions.Permission;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class ChatChannel implements Listener {
@@ -50,6 +53,13 @@ public class ChatChannel implements Listener {
     private String permission;
     @Getter
     @Setter
+    private String permissiondefault;
+    @Getter
+    @Setter
+    @JsonIgnore
+    private Permission bukkitPermission;
+    @Getter
+    @Setter
     private String format;
     @Getter
     @Setter
@@ -65,7 +75,7 @@ public class ChatChannel implements Listener {
     }
 
     public void dispatchMessage(String message, Player p) {
-        MeggaChatPlugin.getServerInstance().broadcast(formatMessage(message, p), permission);
+        MeggaChatPlugin.getServerInstance().broadcast(formatMessage(message, p), bukkitPermission.getName());
     }
 
     public String formatMessage(String msg, Player p) {

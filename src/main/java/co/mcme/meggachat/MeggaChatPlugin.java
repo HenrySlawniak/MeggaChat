@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -65,7 +66,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     @Getter
     private static final HashMap<String, ChatChannel> channelCommands = new HashMap();
     @Getter
-    private static final Permissions permissionsUtil = new Permissions();
+    private static Permissions permissionsUtil = new Permissions();
     private static final String configVersionExpected = "5.1";
 
     @Override
@@ -142,6 +143,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
                 Logger.info("Enabling player list coloring.");
             }
         }
+        permissionsUtil = new Permissions();
         Logger.info("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
     }
 
@@ -234,6 +236,7 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
                 serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
             }
         }
+        permissionsUtil = new Permissions();
         sender.sendMessage("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
     }
 
@@ -241,7 +244,12 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
     public void onCommandPre(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().split(" ")[0].replaceAll("/", "");
         if (channelCommands.containsKey(command)) {
-            channelCommands.get(command).processCommand(command, event.getMessage(), event.getPlayer());
+            ChatChannel channel = channelCommands.get(command);
+            if (event.getPlayer().hasPermission(channel.getBukkitPermission())) {
+                channel.processCommand(command, event.getMessage(), event.getPlayer());
+            } else {
+                event.getPlayer().sendMessage(ChatColor.RED + "You do not have permission to talk in channel '" + channel.getName() + "'");
+            }
             event.setCancelled(true);
         }
     }

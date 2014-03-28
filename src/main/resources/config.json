@@ -66,6 +66,7 @@
             "senderColor": "WHITE",
             "command": "a",
             "permission": "meggachat.channel.a",
+            "permissiondefault": "OP",
             "format": "%reset%[%channelcolor%%name%%reset%] %sendercolor%%sendername%: %messagecolor%%message%"
         }
     ],

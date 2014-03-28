@@ -15,6 +15,9 @@
  */
 package co.mcme.meggachat.utilities;
 
+import co.mcme.meggachat.MeggaChatPlugin;
+import co.mcme.meggachat.configuration.ChatChannel;
+import java.util.ArrayList;
 import lombok.Getter;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -43,5 +46,16 @@ public class Permissions {
     private final Permission allColorsPermission = new Permission("meggachat.signcolor.*", PermissionDefault.OP);
     @Getter
     private final Permission reloadPermission = new Permission("meggachat.reload", PermissionDefault.OP);
+    @Getter
+    private final ArrayList<Permission> channelPermissions;
 
+    public Permissions() {
+        this.channelPermissions = new ArrayList();
+        for (ChatChannel channel : MeggaChatPlugin.getConf().getChannels()) {
+            Permission perm = new Permission(channel.getPermission(), PermissionDefault.valueOf(channel.getPermissiondefault().toUpperCase()));
+            channelPermissions.add(perm);
+            channel.setBukkitPermission(perm);
+            perm.recalculatePermissibles();
+        }
+    }
 }
