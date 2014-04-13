@@ -79,27 +79,29 @@ public class ChatChannel implements Listener {
     }
 
     public void processCommand(String cmd, String fullmsg, Player p) {
-        System.out.println(name + " channel processing command.");
-        String[] msg = fullmsg.substring(command.length() + 2).split(" ");
-        if (msg[0].charAt(0) == '!' && msg[0].length() > 1) {
-            System.out.println("Got control character!");
-            String control = msg[0].substring(1);
-            switch (control) {
-                case "on": {
-                    toggleOn(p);
-                    break;
+        if (p.hasPermission(permission)) {
+            System.out.println(name + " channel processing command.");
+            String[] msg = fullmsg.substring(command.length() + 2).split(" ");
+            if (msg[0].charAt(0) == '!' && msg[0].length() > 1) {
+                System.out.println("Got control character!");
+                String control = msg[0].substring(1);
+                switch (control) {
+                    case "on": {
+                        toggleOn(p);
+                        break;
+                    }
+                    case "off": {
+                        toggleOff(p);
+                        break;
+                    }
+                    default: {
+                        dispatchMessage(StringUtils.join(msg, " "), p);
+                        break;
+                    }
                 }
-                case "off": {
-                    toggleOff(p);
-                    break;
-                }
-                default: {
-                    dispatchMessage(StringUtils.join(msg, " "), p);
-                    break;
-                }
+            } else {
+                dispatchMessage(StringUtils.join(msg, " "), p);
             }
-        } else {
-            dispatchMessage(StringUtils.join(msg, " "), p);
         }
     }
 
