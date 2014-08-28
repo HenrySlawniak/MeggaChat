@@ -19,11 +19,18 @@ import co.mcme.meggachat.MeggaChatPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class FlyingListener implements Listener {
 
     @EventHandler
     public void PlayerLogin(PlayerJoinEvent event) {
+        if (event.getPlayer().hasPermission(MeggaChatPlugin.getPermissionsUtil().getFlyPermission())) {
+            event.getPlayer().setAllowFlight(true);
+        }
+    }
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event) {
         if (event.getPlayer().hasPermission(MeggaChatPlugin.getPermissionsUtil().getFlyPermission())) {
             event.getPlayer().setAllowFlight(true);
         }
