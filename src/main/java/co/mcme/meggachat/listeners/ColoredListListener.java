@@ -60,6 +60,9 @@ public class ColoredListListener implements Listener {
 
     public void ColorName(Player player, String name) {
         String listColor = permissionsEx.getPermissionsManager().getUser(player).getOption("MeggaChat-ListColor");
+        if (listColor == null) {
+            return;
+        }
         player.setPlayerListName(ChatColor.valueOf(listColor) + name);
     }
 }
