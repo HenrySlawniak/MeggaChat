@@ -16,29 +16,22 @@
 package co.mcme.meggachat.listeners;
 
 import co.mcme.meggachat.MeggaChatPlugin;
-import co.mcme.meggachat.utilities.Logger;
 import java.util.Map.Entry;
 import lombok.Getter;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.RegisteredServiceProvider;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class ColoredListListener implements Listener {
 
     @Getter
-    public static Permission permissionsInterface = null;
+    public static PermissionsEx permissionsEx = null;
 
-    public ColoredListListener() {
-        setupPermissions();
-        if (!permissionsInterface.hasGroupSupport()) {
-            Logger.severe("Your permissions plugin does not support groups, tab list coloring disabled.");
-            HandlerList.unregisterAll(this);
-        }
+    public ColoredListListener(PermissionsEx pex) {
+        permissionsEx = pex;
     }
 
     @EventHandler
@@ -61,16 +54,8 @@ public class ColoredListListener implements Listener {
 
     public void ColorName(Player player, String name) {
         for (Entry<String, String> entry : MeggaChatPlugin.getConf().getListcolorgroups().entrySet()) {
-            if (permissionsInterface.getPrimaryGroup(player).equals(entry.getKey())) {
-                player.setPlayerListName(ChatColor.valueOf(entry.getValue()) + name);
-                return;
-            }
+            String listColor = permissionsEx.getPermissionsManager().getUser(player).getOption("MeggaChat-ListColor");
+            player.setPlayerListName(ChatColor.valueOf(listColor) + name);
         }
-    }
-
-    private boolean setupPermissions() {
-        RegisteredServiceProvider<Permission> rsp = MeggaChatPlugin.getServerInstance().getServicesManager().getRegistration(Permission.class);
-        permissionsInterface = rsp.getProvider();
-        return permissionsInterface != null;
     }
 }

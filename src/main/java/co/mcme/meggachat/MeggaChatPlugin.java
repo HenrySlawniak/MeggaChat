@@ -45,6 +45,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class MeggaChatPlugin extends JavaPlugin implements Listener {
 
@@ -134,11 +135,12 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             Logger.info("Enabling sound effects.");
         }
         if (conf.getFeatures().isTablist()) {
-            if (!serverInstance.getPluginManager().isPluginEnabled("Vault")) {
+            if (!serverInstance.getPluginManager().isPluginEnabled("PermissionsEx")) {
                 Logger.severe("Player list coloring enabled, but Vault was not found, disabling colored tab list.");
                 conf.getFeatures().setTablist(false);
             } else {
-                serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
+                PermissionsEx pex = (PermissionsEx) serverInstance.getPluginManager().getPlugin("PermissionsEx");
+                serverInstance.getPluginManager().registerEvents(new ColoredListListener(pex), pluginInstance);
                 Logger.info("Enabling player list coloring.");
             }
         }
@@ -221,9 +223,9 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
             }
         }
         if (conf.getFeatures().isTablist()) {
-            if (!serverInstance.getPluginManager().isPluginEnabled("Vault")) {
+            if (!serverInstance.getPluginManager().isPluginEnabled("PermissionsEx")) {
                 if (verbose) {
-                    sender.sendMessage("Player list coloring enabled, but Vault was not found, disabling colored tab list.");
+                    sender.sendMessage("Player list coloring enabled, but PermissionsEx was not found, disabling colored tab list.");
                 }
                 conf.getFeatures().setTablist(false);
                 return;
@@ -231,7 +233,8 @@ public class MeggaChatPlugin extends JavaPlugin implements Listener {
                 if (verbose) {
                     sender.sendMessage("Enabling player list coloring.");
                 }
-                serverInstance.getPluginManager().registerEvents(new ColoredListListener(), pluginInstance);
+                PermissionsEx pex = (PermissionsEx) serverInstance.getPluginManager().getPlugin("PermissionsEx");
+                serverInstance.getPluginManager().registerEvents(new ColoredListListener(pex), pluginInstance);
             }
         }
         sender.sendMessage("Registered " + HandlerList.getRegisteredListeners((Plugin) pluginInstance).size() + " event listeners");
