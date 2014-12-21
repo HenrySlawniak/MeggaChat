@@ -30,9 +30,6 @@ public class MeggaChatConfig {
     private Features features;
     @Getter
     @Setter
-    private ArrayList<Group> groups;
-    @Getter
-    @Setter
     private BlackList dupeblacklist;
     @Getter
     @Setter
@@ -40,9 +37,6 @@ public class MeggaChatConfig {
     @Getter
     @Setter
     private ArrayList<ChatChannel> channels = new ArrayList();
-    @Getter
-    @Setter
-    private HashMap<String, String> listcolorgroups;
 
     public MeggaChatConfig() {
 

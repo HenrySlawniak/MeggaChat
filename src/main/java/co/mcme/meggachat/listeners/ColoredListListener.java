@@ -15,8 +15,6 @@
  */
 package co.mcme.meggachat.listeners;
 
-import co.mcme.meggachat.MeggaChatPlugin;
-import java.util.Map.Entry;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -53,9 +51,7 @@ public class ColoredListListener implements Listener {
     }
 
     public void ColorName(Player player, String name) {
-        for (Entry<String, String> entry : MeggaChatPlugin.getConf().getListcolorgroups().entrySet()) {
-            String listColor = permissionsEx.getPermissionsManager().getUser(player).getOption("MeggaChat-ListColor");
-            player.setPlayerListName(ChatColor.valueOf(listColor) + name);
-        }
+        String listColor = permissionsEx.getPermissionsManager().getUser(player).getOption("MeggaChat-ListColor");
+        player.setPlayerListName(ChatColor.valueOf(listColor) + name);
     }
 }

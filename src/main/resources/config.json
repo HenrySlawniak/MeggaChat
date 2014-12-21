@@ -1,5 +1,5 @@
 {
-    "configVersion": "5.1",
+    "configVersion": "5.2",
     "features": {
         "adminchat": true,
         "tablist": true,
@@ -13,12 +13,6 @@
         "coloredsigns": true,
         "soundeffects": true
     },
-    "groups": [
-        {
-            "name": "default",
-            "color": "f"
-        }
-    ],
     "dupeblacklist": {
         "name": "dupe",
         "items": [
@@ -68,8 +62,5 @@
             "permission": "meggachat.channel.a",
             "format": "%reset%[%channelcolor%%name%%reset%] %sendercolor%%sendername%: %messagecolor%%message%"
         }
-    ],
-    "listcolorgroups": {
-        "default": "WHITE"
-    }
+    ]
 }
